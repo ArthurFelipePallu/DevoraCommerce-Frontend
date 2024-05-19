@@ -1,0 +1,27 @@
+.detalhes-product-description {
+    padding: 10px 0 0 0;
+    color: var(--dsc-color-font-primary);
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .detalhes-card-top {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--dsc-color-card-border);
+  }
+  .detalhes-card-top img {
+    height: 220px;
+    width: 220px;
+  }
+  .detalhes-card-bottom {
+    padding: 10px 20px;
+  }
+  
+  .detalhes-category-container {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
