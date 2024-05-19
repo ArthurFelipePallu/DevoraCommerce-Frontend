@@ -1,0 +1,14 @@
+@import url("styles.css");
+
+#catalogo-section {
+  padding: 20px 0;
+}
+
+/* =========================================================================================================================================================*/
+/* CARD DE ITENS DO CATALOGO*/
+
+.devcom-catalog-cards {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+}

@@ -1,0 +1,23 @@
+.devcom-catalog-card {
+  border-radius: 10px;
+  border: 1px solid var(--dsc-color-card-border);
+  background-color: var(--dsc-color-card-bg);
+  max-width: 280px;
+  max-height: 280px;
+}
+
+.devcom-catalog-card-top {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.devcom-catalog-card-top img {
+  width: 150px;
+  height: 150px;
+}
+
+.devcom-catalog-card-bottom {
+  border-top: 1px solid var(--dsc-color-card-border);
+  padding: 10px 20px;
+  min-height: 110px;
+}
