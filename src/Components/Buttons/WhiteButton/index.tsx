@@ -1,7 +1,11 @@
+import { ButtonDTO } from "../../../Models/button";
 import "./styles.css";
 
-export default function WhiteButton() {
+type Props={
+  button:ButtonDTO;
+}
+export default function WhiteButton({button}:Props) {
   return (
-    <div className="devcom-btn devcom-btn-white responsive-btn">Inicio</div>
+    <div className="devcom-btn devcom-btn-white responsive-btn">{button.name}</div>
   );
 }
