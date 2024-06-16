@@ -1,29 +1,28 @@
-import "./styles.css"
-import laptopImg from "../../assets/laptop.png";
+import "./styles.css";
 import CategoryCard from "../CategoryCard";
+import { ProductDTO } from "../../Models/product";
 
+type Props = {
+  product: ProductDTO;
+};
 
-export default function ProductDetailsCard() {
+export default function ProductDetailsCard({ product }: Props) {
   return (
     <div className="devcom-card">
       <div className="detalhes-card-top">
-        <img src={laptopImg} alt="Computador Gamer XT"></img>
+        <img src={product.imgUrl} alt="Computador Gamer XT"></img>
       </div>
       <div className="detalhes-card-bottom">
-        <h3 className="devcom-product-price"> R$ 5 000, 00</h3>
-        <h4 className="devcom-product-name">Computador Gamer XT</h4>
-        <p className="detalhes-product-description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <h3 className="devcom-product-price">R$: {product.price}</h3>
+        <h4 className="devcom-product-name">{product.name}</h4>
+        <p className="detalhes-product-description">{product.description}</p>
         <div className="detalhes-category-container">
-          <CategoryCard />
-          <CategoryCard />
+
+          {
+            product.categories.map(item => (
+              <CategoryCard key={item.id} name={item.name} />    
+            ))
+          }
         </div>
       </div>
     </div>

@@ -1,6 +1,8 @@
 import "./styles.css";
 import HeaderClient from "../../Components/HeaderClient";
 import CatalogCard from "../../Components/CatalogCard";
+import BarradeBusca from "../../Components/BarradeBusca";
+import NextPageButton from "../../Components/Buttons/NextPageButton";
 
 export default function Catalog() {
   return (
@@ -9,29 +11,7 @@ export default function Catalog() {
 
       <main>
         <section id="catalogo-section" className="devcom-container">
-          <form id="catalogo-barra-pesquisa" className="barra-pesquisa">
-            <button
-              type="submit"
-              id="devcom-btn-submit"
-              className="devcom-btn-pesquisa"
-            >
-              {" "}
-              🔎︎{" "}
-            </button>
-            <input
-              type="text"
-              className="devcom-search-input"
-              placeholder="Nome do Produto"
-            />
-            <button
-              type="reset"
-              id="devcom-btn-reset"
-              className="devcom-btn-pesquisa"
-            >
-              {" "}
-              🗙{" "}
-            </button>
-          </form>
+          <BarradeBusca />
 
           <div
             id="products-container"
@@ -50,9 +30,7 @@ export default function Catalog() {
             <CatalogCard />
           </div>
 
-            <div id="carregar-mais" className="devcom-btn devcom-btn-white">
-                CARREGAR MAIS
-            </div>
+          <NextPageButton />
         </section>
       </main>
     </>

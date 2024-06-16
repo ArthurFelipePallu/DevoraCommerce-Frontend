@@ -1,5 +1,9 @@
 import "./styles.css";
 
-export default function CategoryCard() {
-  return <div className="detalhes-categoria">Eletrônicos</div>;
+type Props = {
+  name : string;
+}
+
+export default function CategoryCard( {name} : Props) {
+  return <div className="detalhes-categoria">{name}</div>;
 }
