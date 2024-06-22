@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import carrinhoIcon from "../../assets/carrinho.png";
 import "./styles.css";
 
@@ -12,7 +13,8 @@ export default function HeaderClient() {
             <img src={carrinhoIcon} alt="Admin"></img>
           </div>
           <div className="devcom-nav-divs">
-            <a href="">Entrar</a>
+           <Link to="/">Main</Link>
+
           </div>
         </div>
       </nav>
