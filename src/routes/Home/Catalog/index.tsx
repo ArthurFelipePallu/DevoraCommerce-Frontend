@@ -1,9 +1,8 @@
 import "./styles.css";
-import HeaderClient from "../../Components/HeaderClient";
-import CatalogCard from "../../Components/CatalogCard";
-import BarradeBusca from "../../Components/BarradeBusca";
-import NextPageButton from "../../Components/Buttons/NextPageButton";
-import { CatalogProductDTO } from "../../Models/CatalogProduct";
+import CatalogCard from "../../../Components/CatalogCard";
+import BarradeBusca from "../../../Components/BarradeBusca";
+import NextPageButton from "../../../Components/Buttons/NextPageButton";
+import { CatalogProductDTO } from "../../../Models/CatalogProduct";
 
 const productlist:CatalogProductDTO[]=[
   {
@@ -126,7 +125,6 @@ const productlist:CatalogProductDTO[]=[
 export default function Catalog() {
   return (
     <>
-      <HeaderClient />
 
       <main>
         <section id="catalogo-section" className="devcom-container">
@@ -138,7 +136,7 @@ export default function Catalog() {
           >
             {
               productlist.map(item=>(
-                <CatalogCard key={item.id} catalogproductProp={item}/>
+                <CatalogCard key={item.id} catalogproductProp ={item}/>
               ))
             }
 

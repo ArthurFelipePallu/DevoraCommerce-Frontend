@@ -1,10 +1,9 @@
 import "./styles.css";
-import BlueButton from "../../Components/Buttons/BlueButton";
-import WhiteButton from "../../Components/Buttons/WhiteButton";
-import HeaderClient from "../../Components/HeaderClient";
-import ProductDetailsCard from "../../Components/ProductDetailsCard";
-import { ProductDTO } from "../../Models/product";
-import { ButtonDTO } from "../../Models/button";
+import BlueButton from "../../../Components/Buttons/BlueButton";
+import WhiteButton from "../../../Components/Buttons/WhiteButton";
+import ProductDetailsCard from "../../../Components/ProductDetailsCard";
+import { ProductDTO } from "../../../Models/product";
+import { ButtonDTO } from "../../../Models/button";
 
 const product: ProductDTO = {
   id: 2,
@@ -45,7 +44,6 @@ const whiteButton: ButtonDTO = {
 export default function ProductDetails() {
   return (
     <>
-      <HeaderClient />
       <main>
         <section id="product-detail" className="devcom-container">
           <ProductDetailsCard product={product} />

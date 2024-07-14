@@ -1,22 +1,21 @@
-import { Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Catalog from "./routes/Home/Catalog";
+import ProductDetails from "./routes/Home/ProductDetails";
+import Home from "./routes/Home";
 //import ProductDetails from "./routes/ProductDetails";
 
-function App() {
+export default function App() {
   return (
-    <div>
-    <h1>BookKeeper</h1>
-    <nav
-      style={{
-        borderBottom: "solid 1px",
-        paddingBottom: "1rem",
-      }}
-    >
-      <Link to="/catalog">Catalog</Link> |{" "}
-      <Link to="/product-details">Product Details</Link>
-    </nav>
-  </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} >
+        <Route index element={<Catalog />} />
+        <Route path="catalog" element={<Catalog />} />
+        <Route path="product-details" element={<ProductDetails />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
   );
 }
 
-export default App;
