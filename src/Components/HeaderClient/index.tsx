@@ -6,15 +6,18 @@ export default function HeaderClient() {
   return (
     <header className="devcom-header-client">
       <nav className="devcom-container">
-        <h1>DEVORA COMMERCE</h1>
+        <Link to="/">
+          <h1>DEVORA COMMERCE</h1>
+        </Link>
 
         <div className="devcom-navbar-right">
           <div className="devcom-menu-item">
-            <img src={carrinhoIcon} alt="Admin"></img>
+            <Link to="/cart">
+              <img src={carrinhoIcon} alt="Admin"></img>
+            </Link>
           </div>
           <div className="devcom-nav-divs">
-           <Link to="/">Main</Link>
-
+            <Link to="/login">Entrar</Link>
           </div>
         </div>
       </nav>

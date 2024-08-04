@@ -8,7 +8,7 @@ type Props = {
 
 export default function CatalogCard({ catalogproductProp }: Props) {
   return (
-    <Link to={'/product-details/'} >
+    <Link to={`/product-details/${catalogproductProp.id}`} >
       <div className="devcom-catalog-card ">
         <div className="devcom-catalog-card-top">
           <img src={catalogproductProp.imgUrl} alt="computer" />

@@ -2,10 +2,10 @@ import "./styles.css";
 import BlueButton from "../../../Components/Buttons/BlueButton";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import ProductDetailsCard from "../../../Components/ProductDetailsCard";
-import { ProductDTO } from "../../../Models/product";
 import { ButtonDTO } from "../../../Models/button";
 import * as ProductService from "../../../services/product-service";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const blueButton: ButtonDTO = {
   id: 1,
@@ -19,7 +19,7 @@ const whiteButton: ButtonDTO = {
 };
 export default function ProductDetails() {
   const params = useParams();
-  const product = ProductService.findById( Number(params.productId));
+  const product = ProductService.findById(Number(params.productId));
   return (
     <>
       <main>
@@ -28,7 +28,9 @@ export default function ProductDetails() {
 
           <BlueButton button={blueButton} />
 
-          <WhiteButton button={whiteButton} />
+          <Link to="/">
+            <WhiteButton button={whiteButton} />
+          </Link>
         </section>
       </main>
     </>
