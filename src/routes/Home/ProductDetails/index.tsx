@@ -6,6 +6,8 @@ import { ButtonDTO } from "../../../Models/button";
 import * as ProductService from "../../../services/product-service";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ProductDTO } from "../../../Models/product";
 
 const blueButton: ButtonDTO = {
   id: 1,
@@ -19,7 +21,15 @@ const whiteButton: ButtonDTO = {
 };
 export default function ProductDetails() {
   const params = useParams();
-  const product = ProductService.findById(Number(params.productId));
+
+  const [product, setProduct] = useState<ProductDTO>();
+
+  useEffect(() => {
+    ProductService.findById(Number(params.productId))
+    .then(response => {
+      setProduct(response.data);
+    });
+  }, []);
   return (
     <>
       <main>
