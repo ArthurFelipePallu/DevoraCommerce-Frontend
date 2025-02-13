@@ -19,7 +19,7 @@ export default function CatalogCard({ catalogproductProp }: Props) {
             R$ {catalogproductProp.price.toFixed(2)}
           </h3>
           <h4 className="devcom-product-name">
-            {catalogproductProp.description}{" "}
+             {catalogproductProp.name}
           </h4>
         </div>
       </div>

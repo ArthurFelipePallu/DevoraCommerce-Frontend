@@ -38,7 +38,12 @@ body {
 main {
   padding: 0 20px;
 }
-
+.devcom-mb5 {
+  margin-bottom: 5px;
+}
+.devcom-mb10 {
+  margin-bottom: 10px;
+}
 .devcom-mb20 {
   margin-bottom: 20px;
 }
@@ -160,7 +165,7 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
 /*  CARD STYLES */
 
 .devcom-card {
-  border-radius: 40px;
+  border-radius: 10px;
   border: 1px solid var(--dsc-color-card-border);
   background-color: var(--dsc-color-card-bg);
 }

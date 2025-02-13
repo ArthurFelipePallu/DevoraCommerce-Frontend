@@ -39,7 +39,7 @@ export default function ProductDetails() {
     <>
       <main>
         <section id="product-detail" className="devcom-container">
-          {product && <ProductDetailsCard product={product} />}
+          {   product && <ProductDetailsCard product={product} />}
 
           <BlueButton button={blueButton} />
 
