@@ -1,7 +1,7 @@
 import "./styles.css";
 
 import * as cartService from "../../../services/cart-service";
-import CartProductCard from "../../../Components/CartComponents/CartProductCard";
+//import CartProductCard from "../../../Components/CartComponents/CartProductCard";
 import BlueButton from "../../../Components/Buttons/BlueButton";
 import { ButtonDTO } from "../../../Models/button";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
@@ -35,13 +35,15 @@ const clearCartButton: ButtonDTO = {
 export default function Cart() {
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
-
-  function HandleClearClick()
-  {
+  function HandleClearClick() {
     cartService.clearCart();
     setCart(cartService.getCart());
   }
 
+  function handleIncreaseItem(productId: number) {
+    cartService.increaseItem(productId);
+    setCart(cartService.getCart());
+  }
   return (
     <main>
       <section id="cart-container-section" className="devcom-container">
@@ -50,8 +52,31 @@ export default function Cart() {
             <h2>Seu carrinho está vazio</h2>
           </div>
         ) : (
-          cart.items.map((item) => (
-            <CartProductCard key={item.productId} product={item} />
+          cart.items.map((product) => (
+            <div className="devcom-card devcom-mb5">
+              <div className="dsc-cart-item-container dsc-line-bottom">
+                <div className="dsc-cart-item-left">
+                  <img src={product.imgUrl} alt="Computador" />
+                  <div className="dsc-cart-item-description">
+                    <h3>{product.name}</h3>
+                    <div className="dsc-cart-item-quantity-container">
+                      <div className="dsc-cart-item-quantity-btn">-</div>
+                      <p>{product.quantity}</p>
+                      <div
+                        onClick={() => handleIncreaseItem(product.productId)}
+                        className="dsc-cart-item-quantity-btn"
+                      >
+                        {" "}
+                        +
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="dsc-cart-item-right">
+                  R$ {product.subTotal.toFixed(2)}
+                </div>
+              </div>
+            </div>
           ))
         )}
         <div className="dsc-cart-total-container">
@@ -67,7 +92,6 @@ export default function Cart() {
           <div onClick={HandleClearClick}>
             <BlueButton button={clearCartButton} />
           </div>
-          
         </div>
       </section>
     </main>
