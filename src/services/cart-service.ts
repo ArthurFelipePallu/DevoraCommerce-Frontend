@@ -1,5 +1,6 @@
 
-import { OrderDTO } from "../Models/order";
+import { OrderDTO, OrderItemDTO } from "../Models/order";
+import { ProductDTO } from "../Models/product";
 import * as cartRepository from "../localStorage/cartRepository";
 
 
@@ -9,6 +10,42 @@ export function saveCart(cart : OrderDTO){
 
 export function getCart() : OrderDTO{
   return cartRepository.retrieveFromLocalSotage();
+}
+
+export function addProductToCart(product : ProductDTO){
+
+  if(!alreadyHasProductInCart(product.id)){
+    const cart = getCart();
+    
+    const newItemDTO = new OrderItemDTO(product.id,
+                                        1,
+                                        product.name,
+                                        product.price,
+                                        product.imgUrl );
+    
+      cart.items.push(newItemDTO);
+
+    saveCart(cart);
+  }
+  else{
+    //já tem produto no careinho
+    //mostrar mensagem para usuário
+  }
+
+  
+}
+
+function alreadyHasProductInCart(productId : number ):boolean{
+  const item = getCart().items.find(x=> x.productId === productId)
+  if(!item){
+    return false;
+  }
+  return true;
+}
+
+export function clearCart()
+{
+  cartRepository.clearLocalStorageCart();
 }
 
 // const cart = {

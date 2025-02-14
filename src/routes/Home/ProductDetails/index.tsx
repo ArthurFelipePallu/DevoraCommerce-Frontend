@@ -4,6 +4,7 @@ import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import ProductDetailsCard from "../../../Components/ProductDetailsCard";
 import { ButtonDTO } from "../../../Models/button";
 import * as ProductService from "../../../services/product-service";
+import * as CartService from "../../../services/cart-service";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -35,14 +36,26 @@ export default function ProductDetails() {
       navigate("/catalog");
     });
   }, []);
+
+  function handleBuyClick(){
+    if(product) // se produto nao for undefined
+    {
+
+      CartService.addProductToCart(product);
+      navigate("/cart");
+    }
+  }
+
   return (
     <>
       <main>
         <section id="product-detail" className="devcom-container">
           {   product && <ProductDetailsCard product={product} />}
 
-          <BlueButton button={blueButton} />
-
+          <div onClick={handleBuyClick}>
+            <BlueButton button={blueButton} />
+          </div>
+          
           <Link to="/">
             <WhiteButton button={whiteButton} />
           </Link>
