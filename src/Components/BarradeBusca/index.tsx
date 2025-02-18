@@ -1,8 +1,29 @@
+import { useState } from "react";
 import "./styles.css";
 
-export default function BarradeBusca() {
+
+type Prop={
+  onSearchFilter : Function
+}
+
+export default function BarradeBusca({onSearchFilter} : Prop) {
+  const [searchText,setSearchText] = useState<string>("");
+
+  function handleSubmit(event: any){
+    event.preventDefault(); // impede que a página recarregue
+    onSearchFilter(searchText);
+
+  }
+  function handleSearchTextChange(event : any){
+    setSearchText(event.target.value);
+  }
+  function handleResetClick(){
+    setSearchText("");
+    onSearchFilter(searchText);
+  }
+
   return (
-    <form id="catalogo-barra-pesquisa" className="barra-pesquisa">
+    <form id="catalogo-barra-pesquisa" className="barra-pesquisa" onSubmit={handleSubmit}>
       <button
         type="submit"
         id="devcom-btn-submit"
@@ -13,13 +34,15 @@ export default function BarradeBusca() {
       </button>
       <input
         type="text"
+        value={searchText}
+        onChange={handleSearchTextChange}
         className="devcom-search-input"
         placeholder="Nome do Produto"
       />
       <button
-        type="reset"
         id="devcom-btn-reset"
         className="devcom-btn-pesquisa"
+        onClick={handleResetClick}
       >
         {" "}
         🗙{" "}

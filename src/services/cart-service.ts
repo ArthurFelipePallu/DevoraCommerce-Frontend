@@ -28,7 +28,7 @@ export function addProductToCart(product : ProductDTO){
     saveCart(cart);
   }
   else{
-    //já tem produto no careinho
+    //já tem produto no carrinho
     //mostrar mensagem para usuário
   }
 
@@ -57,10 +57,34 @@ export function increaseItem( productId : number){
     saveCart(cart);
   }
 }
+export function decreaseItem( productId : number){
+  const cart = cartRepository.retrieveFromLocalSotage();
+  const item = cart.items.find( x => x.productId === productId)
+  if(item){
+    item.quantity--;
+    if(item.quantity <1)
+      cart.items = cart.items.filter(x => x.productId !== productId);//tira item do carrinho
+          
+    saveCart(cart);
+  }
+}
+
+export function deleteItemWithId(productId : number){
+  const cart = cartRepository.retrieveFromLocalSotage();
+ 
+  cart.items = cart.items.filter(x => x.productId !== productId);//tira item do carrinho
+          
+  saveCart(cart);
+  
+}
 
 export function retrieveItemWithId(productId:number) :OrderItemDTO{
   const cart = cartRepository.retrieveFromLocalSotage();
   const item = cart.items.find( x => x.productId === productId)
+  if(!item)
+  {
+    //lida com erro
+  }
   return item;
 }
 

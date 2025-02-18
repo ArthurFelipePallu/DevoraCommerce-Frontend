@@ -6,16 +6,11 @@ import BlueButton from "../../../Components/Buttons/BlueButton";
 import { ButtonDTO } from "../../../Models/button";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import { useState } from "react";
-import { OrderDTO, OrderItemDTO } from "../../../Models/order";
+import { OrderDTO } from "../../../Models/order";
 import { Link } from "react-router-dom";
+import deleteIcon from "../../../assets/delete_icon.png";
+import CartProductCard from "../../../Components/CartComponents/CartProductCard";
 
-const item1: OrderItemDTO = new OrderItemDTO(
-  6,
-  2,
-  "Mug",
-  100,
-  "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRUorzyJ_lWq0LrwAsN2KWPcQLL3tk4h6kMAelYSoIFtrW7qh5cK1SEZSdirofGgCD9K_qlYUCsbWU5pnzgXPpMmwlrDSrrPaSbs2n3CYVBRAkMJ0SUO-bp8A&usqp=CAE"
-);
 
 const finishOrderButton: ButtonDTO = {
   id: 1,
@@ -44,6 +39,23 @@ export default function Cart() {
     cartService.increaseItem(productId);
     setCart(cartService.getCart());
   }
+
+  function handleDecreaseItem(productId: number) {
+    cartService.decreaseItem(productId);
+    setCart(cartService.getCart());
+  }
+  function handleDeleteItem(productId: number) {
+    cartService.deleteItemWithId(productId);
+    setCart(cartService.getCart());
+  }
+
+  const functionsToPass={
+    onIncreaseQuantityOnClick : handleIncreaseItem,
+    onDecreaseQuantityOnClick : handleDecreaseItem,
+    onDeleteOnClick : handleDeleteItem,
+  }
+
+
   return (
     <main>
       <section id="cart-container-section" className="devcom-container">
@@ -53,30 +65,7 @@ export default function Cart() {
           </div>
         ) : (
           cart.items.map((product) => (
-            <div className="devcom-card devcom-mb5">
-              <div className="dsc-cart-item-container dsc-line-bottom">
-                <div className="dsc-cart-item-left">
-                  <img src={product.imgUrl} alt="Computador" />
-                  <div className="dsc-cart-item-description">
-                    <h3>{product.name}</h3>
-                    <div className="dsc-cart-item-quantity-container">
-                      <div className="dsc-cart-item-quantity-btn">-</div>
-                      <p>{product.quantity}</p>
-                      <div
-                        onClick={() => handleIncreaseItem(product.productId)}
-                        className="dsc-cart-item-quantity-btn"
-                      >
-                        {" "}
-                        +
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="dsc-cart-item-right">
-                  R$ {product.subTotal.toFixed(2)}
-                </div>
-              </div>
-            </div>
+            <CartProductCard key={product.productId} product={product} functions={functionsToPass}/>
           ))
         )}
         <div className="dsc-cart-total-container">
