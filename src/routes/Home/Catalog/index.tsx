@@ -6,20 +6,37 @@ import { useEffect, useState } from "react";
 import * as ProductService from "../../../services/product-service";
 import { ProductDTO } from "../../../Models/product";
 
+
+type QueryParams ={
+  page : number;
+  name : string;
+  size : number;
+  sort : string;
+}
+
 export default function Catalog() {
+
+  const [isLastPage,setLastPage] = useState(false);
+
   const [catalog_product_list, setCatalogList] = useState<ProductDTO[]>([]);
 
-  const[filtroBarraDeBusca,setFiltroBarraDeBusca] = useState<string>("");
+  const[queryParams,setQueryParams] = useState<QueryParams>({page:0 , name:"",size:12, sort:"name"});
 
   useEffect(() => {
-    ProductService.findPageRequest(0,filtroBarraDeBusca).then((response) => {
-      console.log(response);
-      setCatalogList(response.data.content);
+    ProductService.findPageRequest(queryParams.page,queryParams.name).then((response) => {
+      const nextPage = response.data.content;      
+      setLastPage(response.data.last);
+      setCatalogList(catalog_product_list.concat(nextPage));
     });
-  }, [filtroBarraDeBusca]);
+  }, [queryParams]);
 
 function handleSearch(searchText : string){
-  setFiltroBarraDeBusca(searchText);
+  setCatalogList([]);
+  setQueryParams({...queryParams , page : 0 , name :searchText });
+}
+
+function handleNextPageClick(){
+  setQueryParams({...queryParams, page : queryParams.page +1  });
 }
 
 
@@ -37,8 +54,13 @@ function handleSearch(searchText : string){
               <CatalogCard key={product.id} catalogproductProp={product} />
             ))}
           </div>
-
-          <NextPageButton />
+          {
+            !isLastPage &&
+            <div onClick={handleNextPageClick}>
+              <NextPageButton />
+            </div>
+          }
+            
         </section>
       </main>
     </>

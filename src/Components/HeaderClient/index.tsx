@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import carrinhoIcon from "../../assets/carrinho.png";
 import "./styles.css";
+import CartIcon from "../CartIcon";
 
 export default function HeaderClient() {
   return (
@@ -11,11 +11,8 @@ export default function HeaderClient() {
         </Link>
 
         <div className="devcom-navbar-right">
-          <div className="devcom-menu-item">
-            <Link to="/cart">
-              <img src={carrinhoIcon} alt="Admin"></img>
-            </Link>
-          </div>
+          <CartIcon />
+
           <div className="devcom-nav-divs">
             <Link to="/login">Entrar</Link>
           </div>
