@@ -39,6 +39,7 @@ export default function CartProductCard({ product, functions }: Props) {
       }
     }    
   }
+  console.log("[CartProductCard] rendering ...");
 
   return (
     <div className="devcom-card devcom-mb5">

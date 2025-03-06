@@ -5,11 +5,11 @@ import * as cartService from "../../../services/cart-service";
 import BlueButton from "../../../Components/Buttons/BlueButton";
 import { ButtonDTO } from "../../../Models/button";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { OrderDTO } from "../../../Models/order";
 import { Link } from "react-router-dom";
-import deleteIcon from "../../../assets/delete_icon.png";
 import CartProductCard from "../../../Components/CartComponents/CartProductCard";
+import { ContextCartCount } from "../../../utils/context-cart";
 
 
 const finishOrderButton: ButtonDTO = {
@@ -29,25 +29,34 @@ const clearCartButton: ButtonDTO = {
 };
 export default function Cart() {
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+  const { setContextCartCount} = useContext(ContextCartCount);
 
   function HandleClearClick() {
     cartService.clearCart();
-    setCart(cartService.getCart());
+    updateCart();
   }
 
   function handleIncreaseItem(productId: number) {
     cartService.increaseItem(productId);
-    setCart(cartService.getCart());
+    updateCart();
   }
 
   function handleDecreaseItem(productId: number) {
     cartService.decreaseItem(productId);
-    setCart(cartService.getCart());
+    updateCart();    
   }
   function handleDeleteItem(productId: number) {
     cartService.deleteItemWithId(productId);
-    setCart(cartService.getCart());
+    updateCart();
   }
+
+  function updateCart(){
+    const newCart = cartService.getCart(); 
+    setCart(newCart);
+    setContextCartCount(cartService.FindTotalItemsInCart());
+  }
+
+
 
   const functionsToPass={
     onIncreaseQuantityOnClick : handleIncreaseItem,

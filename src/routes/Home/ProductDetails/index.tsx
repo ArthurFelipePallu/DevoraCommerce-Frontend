@@ -7,8 +7,9 @@ import * as ProductService from "../../../services/product-service";
 import * as CartService from "../../../services/cart-service";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductDTO } from "../../../Models/product";
+import { ContextCartCount } from "../../../utils/context-cart";
 
 const blueButton: ButtonDTO = {
   id: 1,
@@ -22,6 +23,9 @@ const whiteButton: ButtonDTO = {
 };
 export default function ProductDetails() {
   const params = useParams();
+
+  const { setContextCartCount} = useContext(ContextCartCount);
+
 
   const [product, setProduct] = useState<ProductDTO>();
 
@@ -40,11 +44,13 @@ export default function ProductDetails() {
   function handleBuyClick(){
     if(product) // se produto nao for undefined
     {
-
       CartService.addProductToCart(product);
+    setContextCartCount(CartService.FindTotalItemsInCart());
       navigate("/cart");
     }
   }
+
+   
 
   return (
     <>

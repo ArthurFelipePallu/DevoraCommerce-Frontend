@@ -1,15 +1,13 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
 import carrinhoIcon from "../../assets/carrinho.png";
-import { useState } from "react";
-import * as cartService from "../../services/cart-service";
+import { useContext } from "react";
+import { ContextCartCount } from "../../utils/context-cart";
 
 export default function CartIcon() {
 
-    const [cart,setCart] = useState(cartService.getCart());
-
-
-    
+   
+    const {contextCartCount } = useContext(ContextCartCount);
 
 
   return (
@@ -17,7 +15,10 @@ export default function CartIcon() {
       <Link to="/cart">
         <img src={carrinhoIcon} alt="Admin"></img>
       </Link>      
-        <div className="devcom-cart-count" >{cart.items.length}</div>
+        <div className="devcom-cart-count" >{contextCartCount}</div>
+        
     </div>
   );
+  console.log("[CartIcon] rendering ...");
+
 }

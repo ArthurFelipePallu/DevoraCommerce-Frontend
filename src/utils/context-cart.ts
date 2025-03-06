@@ -10,3 +10,14 @@ export const ContextCartCount = createContext<ContextCartCountType>({
     contextCartCount:0,
     setContextCartCount: () => {}
 });
+
+
+// export default function ContextCartCountProvider(){
+
+//     return(
+        
+//             <ContextCartCount.Provider value={{contextCartCount,setContextCartCount}}>
+              
+//             </ContextCartCount.Provider>
+//     );
+// }

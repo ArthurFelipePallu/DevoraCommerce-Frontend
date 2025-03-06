@@ -1,12 +1,13 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Catalog from "./routes/Home/Catalog";
-import ProductDetails from "./routes/Home/ProductDetails";
+import { useState } from "react";
 import Home from "./routes/Home";
 import Cart from "./routes/Home/Cart";
-import { useState } from "react";
+import Login from "./routes/Home/Login";
+import Catalog from "./routes/Home/Catalog";
+import NumberForm from "./routes/Home/NumberForn";
 import { ContextCartCount } from "./utils/context-cart";
-//import ProductDetails from "./routes/ProductDetails";
+import ProductDetails from "./routes/Home/ProductDetails";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -22,7 +23,9 @@ export default function App() {
               path="product-details/:productId"
               element={<ProductDetails />}
             />
+            <Route path="number-form" element={<NumberForm/>} />
             <Route path="cart" element={<Cart />} />
+            <Route path="login" element={<Login />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

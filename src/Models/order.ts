@@ -24,6 +24,7 @@ export class OrderItemDTO{
         public imgUrl:string 
     ){}
 
+
     get subTotal()
     {
         return this.price * this.quantity;
