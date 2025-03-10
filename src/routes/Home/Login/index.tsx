@@ -1,20 +1,21 @@
-import { useState } from "react";
-import FormErrorMessage from "../../../Components/FormErrorMessage";
 import "./styles.css";
+import { useState } from "react";
+import {loginRequest} from "../../../services/auth-service";
+import FormErrorMessage from "../../../Components/FormErrorMessage";
+import { CredentialsDTO } from "../../../Models/Authentication/auth";
 
-type loginInfo = {
-  loginEmail: string;
-  loginPassword: string;
-};
+
 
 export default function Login() {
-  const [loginInfo, setloginInfo] = useState<loginInfo>({
-    loginEmail: "",
-    loginPassword: "",
-  });
+  const [loginInfo, setloginInfo] = useState<CredentialsDTO>({
+                                                                username: "",
+                                                                password: "",
+                                                              });
 
   function handleSubmit(event:any){
     event.preventDefault();
+    const credentials = loginInfo;
+    loginRequest(credentials);
   }
 
   function handleLoginCheck() {}
@@ -34,8 +35,8 @@ export default function Login() {
               <div className="login-form-input-conatiner">
                 <input
                   type="text"
-                  name="loginEmail"
-                  value={loginInfo.loginEmail}
+                  name="username"
+                  value={loginInfo.username}
                   placeholder="Email"
                   className="login-form-input"
                   onChange={handleFormInputChange}
@@ -48,8 +49,8 @@ export default function Login() {
               <div className="login-form-input-conatiner">
                 <input
                   type="password"
-                  name="loginPassword"
-                  value={loginInfo.loginPassword}
+                  name="password"
+                  value={loginInfo.password}
                   placeholder="Password"
                   className="login-form-input"
                   onChange={handleFormInputChange}
