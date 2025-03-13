@@ -1,9 +1,8 @@
 import "./styles.css";
 import { useState } from "react";
-import {loginRequest} from "../../../services/auth-service";
+import * as authService from "../../../services/auth-service"
 import FormErrorMessage from "../../../Components/FormErrorMessage";
 import { CredentialsDTO } from "../../../Models/Authentication/auth";
-
 
 
 export default function Login() {
@@ -14,8 +13,13 @@ export default function Login() {
 
   function handleSubmit(event:any){
     event.preventDefault();
-    const credentials = loginInfo;
-    loginRequest(credentials);
+    authService.loginRequest(loginInfo)
+    .then(response =>{
+            console.log(response.data);
+    })
+    .catch(error =>{
+      console.log("Erro no LOGIN: ",error);
+    })
   }
 
   function handleLoginCheck() {}
