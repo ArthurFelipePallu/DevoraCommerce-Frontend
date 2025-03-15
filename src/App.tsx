@@ -8,6 +8,8 @@ import NumberForm from "./routes/Home/NumberForn";
 import { ContextCartCount } from "./utils/context-cart";
 import ProductDetails from "./routes/Home/ProductDetails";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AdminHome from "./routes/Admin/AdminHome";
+import Admin from "./routes/Admin";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -27,6 +29,11 @@ export default function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="login" element={<Login />} />
           </Route>
+          /////////////////////////////////////////////////
+          <Route path="/admin/" element={<Admin />}>
+            <Route index element={<AdminHome />} />
+          </Route>
+          //////////////////////////////////////////////////
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>

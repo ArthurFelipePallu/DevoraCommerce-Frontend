@@ -2,7 +2,9 @@ import QueryString from "qs";
 import { AxiosRequestConfig } from "axios";
 import { requestBackEnd } from "../utils/requests";
 import {CLIENT_ID,CLIENT_SECRET} from "../utils/system"
+import { TokenDTO } from "../Models/Authentication/token";
 import {CredentialsDTO} from "../Models/Authentication/auth";
+import * as TokenRepository from "../localStorage/authTokenRepository";
 
 export function loginRequest( loginData: CredentialsDTO){
 
@@ -24,6 +26,23 @@ export function loginRequest( loginData: CredentialsDTO){
    return requestBackEnd(config)
 }
 
+export function requestFromBackEnd(logindData : CredentialsDTO)
+{
+
+}
+
+export function logout()
+{
+    TokenRepository.clearToken();
+}
+function saveAccessToken(token : TokenDTO)
+{
+    TokenRepository.saveToken(token);
+}
+function getAccessToken() : TokenDTO
+{
+    return TokenRepository.retrieveToken();
+}
 
 
 
