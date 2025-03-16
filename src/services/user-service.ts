@@ -1,13 +1,14 @@
+import { AxiosRequestConfig } from "axios";
 import { requestBackEnd } from "../utils/requests";
-import * as AuthService from "./auth-service"
 
 
 export function findLoggedUser(){
 
-    const requestHeaders ={
-        Authorization : "Bearer " + AuthService.getAccessToken()
+    const config :AxiosRequestConfig ={
+        url:`/users/me`,
+        withCredentials: true,
     }
-    return requestBackEnd({url: `/users/me`, headers: requestHeaders});
+    return requestBackEnd(config);
 }
 
 
