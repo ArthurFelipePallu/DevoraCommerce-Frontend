@@ -21,3 +21,34 @@ export function requestBackEnd( config : AxiosRequestConfig){
                     headers:requestHeaders 
                 } );
 }
+
+//REQUEST INTERCEPTOR
+axios.interceptors.request.use(
+    function(config){ //DO SOMETHING BEFORE REQUEST IS SENT
+        
+        return config;
+    },
+    function (error){ // DO SOMETHING WITH REQUEST ERROR
+
+        return Promise.reject(error);
+    }
+);
+
+
+//RESPONSE INTERCEPTOR
+axios.interceptors.request.use(
+    
+
+    function(response){ //DO SOMETHING BEFORE RESPONSE IS SENT
+        
+        return response;
+    },
+    function (error){ // DO SOMETHING WITH RESPONSE ERROR
+
+        if(error.response.status == 401)
+            {
+              console.log("Erro no LOGIN: ",error);
+            }
+        return Promise.reject(error);
+    }
+);

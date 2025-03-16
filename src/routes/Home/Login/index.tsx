@@ -11,15 +11,13 @@ export default function Login() {
                                                                 password: "",
                                                               });
 
+
   function handleSubmit(event:any){
     event.preventDefault();
     authService.loginRequest(loginInfo)
     .then(response =>{
             console.log(response.data);
             authService.saveAccessToken(response.data.access_token); 
-    })
-    .catch(error =>{
-      console.log("Erro no LOGIN: ",error);
     })
   }
 
