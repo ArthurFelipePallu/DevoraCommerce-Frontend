@@ -1,22 +1,25 @@
 import "./App.css";
 import { useState } from "react";
 import Home from "./routes/Home";
+import Admin from "./routes/Admin";
 import Cart from "./routes/Home/Cart";
 import Login from "./routes/Home/Login";
+import { history } from "./utils/history";
 import Catalog from "./routes/Home/Catalog";
+import AdminHome from "./routes/Admin/AdminHome";
 import NumberForm from "./routes/Home/NumberForn";
 import { ContextCartCount } from "./utils/context-cart";
 import ProductDetails from "./routes/Home/ProductDetails";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import AdminHome from "./routes/Admin/AdminHome";
-import Admin from "./routes/Admin";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
 
   return (
     <ContextCartCount.Provider value={{contextCartCount,setContextCartCount}}>
-      <BrowserRouter>
+      <HistoryRouter history={history}>
         <Routes>
           <Route path="/" element={<Home />}>
             <Route index element={<Catalog />} />
@@ -36,7 +39,7 @@ export default function App() {
           //////////////////////////////////////////////////
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </ContextCartCount.Provider>
   );
 }
