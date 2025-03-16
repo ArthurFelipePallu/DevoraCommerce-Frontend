@@ -26,20 +26,20 @@ export function loginRequest( loginData: CredentialsDTO){
    return requestBackEnd(config)
 }
 
-export function requestFromBackEnd(logindData : CredentialsDTO)
-{
+// export function requestFromBackEnd(logindData : CredentialsDTO)
+// {
 
-}
+// }
 
 export function logout()
 {
     TokenRepository.clearToken();
 }
-function saveAccessToken(token : TokenDTO)
+export function saveAccessToken(token : TokenDTO)
 {
     TokenRepository.saveToken(token);
 }
-function getAccessToken() : TokenDTO
+export function getAccessToken() : TokenDTO
 {
     return TokenRepository.retrieveToken();
 }

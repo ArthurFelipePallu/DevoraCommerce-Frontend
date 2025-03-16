@@ -1,7 +1,7 @@
 //recursos para ajudar a fazer requisições
 
-import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "./system";
+import axios, { AxiosRequestConfig } from "axios";
 
 
 export function requestBackEnd( config : AxiosRequestConfig){

@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as UserService from "../../../services/user-service";
+import { UserDTO } from "../../../Models/user";
 
 export default function AdminHome()
 {
-    const [adminName,setAdminName] = useState("Arthur");
+    const [user,setUser] = useState<UserDTO>();
+    
+    useEffect(() => {
+        UserService.findLoggedUser()
+            .then( response =>{
+                setUser(response.data);
+                console.log(response.data);
+            })
+            .catch(error =>{
+                console.log("Error : ", error) ;
+            });
+    },[]);
 
     return (
         <main>
             <section id="admin-home-section" className="devcom-container">
-                <h2>Bem vindo administrador {adminName}</h2>
+                <h2>Bem vindo administrador {user?.name} </h2>
             </section>
         </main>
     );

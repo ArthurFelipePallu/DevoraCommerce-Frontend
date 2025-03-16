@@ -2,6 +2,8 @@ import "./styles.css";
 import ProductIcon from "../ProductIcon";
 
 export default function HeaderAdmin() {
+
+
   return (
     <header className="devcom-header-admin">
       <nav className="devcom-container">
