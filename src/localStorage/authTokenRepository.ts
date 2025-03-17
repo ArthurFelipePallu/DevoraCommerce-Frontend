@@ -13,6 +13,10 @@ export function retrieveToken() : TokenDTO
     const token = JSON.parse(t) as TokenDTO;
     return token;
 }
+export function retrieveTokenRAW() : string
+{    
+    return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY) || '{}';
+}
 
 export function clearToken()
 {

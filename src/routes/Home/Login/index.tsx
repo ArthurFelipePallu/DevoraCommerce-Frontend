@@ -11,14 +11,17 @@ export default function Login() {
                                                                 password: "",
                                                               });
 
+  const [authenticationError,setAuthenticationError] = useState<boolean>(false);
 
   function handleSubmit(event:any){
     event.preventDefault();
     authService.loginRequest(loginInfo)
-    .then(response =>{
+     .then(response =>{
             console.log(response.data);
             authService.saveAccessToken(response.data.access_token); 
     })
+    setAuthenticationError(!authService.isAuthenticated())
+    setAuthenticationError(authenticationError);
   }
 
   function handleLoginCheck() {}
@@ -45,8 +48,8 @@ export default function Login() {
                   onChange={handleFormInputChange}
                 />
                 <FormErrorMessage
-                  errorOcurred={false}
-                  errorMessage="No error Handling Yet"
+                  errorOcurred={authenticationError}
+                  errorMessage="Incorrect user email"
                 />
               </div>
               <div className="login-form-input-conatiner">
@@ -59,8 +62,8 @@ export default function Login() {
                   onChange={handleFormInputChange}
                 />
                 <FormErrorMessage
-                  errorOcurred={false}
-                  errorMessage="No error Handling Yet"
+                  errorOcurred={authenticationError}
+                  errorMessage="Incorrect password"
                 />
               </div>
               <button

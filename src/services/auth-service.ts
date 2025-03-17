@@ -1,9 +1,10 @@
 import QueryString from "qs";
+import jwtDecode from "jwt-decode";
 import { AxiosRequestConfig } from "axios";
 import { requestBackEnd } from "../utils/requests";
 import {CLIENT_ID,CLIENT_SECRET} from "../utils/system"
 import { TokenDTO } from "../Models/Authentication/token";
-import {CredentialsDTO} from "../Models/Authentication/auth";
+import {AccessTokenPayloadDTO, CredentialsDTO} from "../Models/Authentication/auth";
 import * as TokenRepository from "../localStorage/authTokenRepository";
 
 export function loginRequest( loginData: CredentialsDTO){
@@ -26,11 +27,6 @@ export function loginRequest( loginData: CredentialsDTO){
    return requestBackEnd(config)
 }
 
-// export function requestFromBackEnd(logindData : CredentialsDTO)
-// {
-
-// }
-
 export function logout()
 {
     TokenRepository.clearToken();
@@ -44,7 +40,22 @@ export function getAccessToken() : TokenDTO
     return TokenRepository.retrieveToken();
 }
 
+export function getAccessTokenPayload() : AccessTokenPayloadDTO | undefined
+{
+    try {
+        const token = TokenRepository.retrieveTokenRAW();
+        return token == null? undefined : (jwtDecode(token) as AccessTokenPayloadDTO);
+    }catch(error){
+        return undefined;
+    }
+}
 
+export function isAuthenticated():boolean {
+    const tokenPayload = getAccessTokenPayload();
+    return tokenPayload                              // se token existe
+            && tokenPayload?.exp * 1000 > Date.now() // se token nao expirou
+            ? true : false;
+}
 
 function encodeBase64(toencode: string){
     return window.btoa(toencode);

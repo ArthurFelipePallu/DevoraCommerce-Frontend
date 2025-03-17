@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as UserService from "../../../services/user-service";
-import { UserDTO } from "../../../Models/user";
+import { UserDTO } from "../../../Models/Authentication/user";
 
 export default function AdminHome()
 {

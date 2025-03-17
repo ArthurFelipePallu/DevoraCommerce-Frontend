@@ -12,6 +12,7 @@ import { ContextCartCount } from "./utils/context-cart";
 import ProductDetails from "./routes/Home/ProductDetails";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { PrivateRoute } from "./Components/PrivateRoute";
 
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
             <Route path="login" element={<Login />} />
           </Route>
           /////////////////////////////////////////////////
-          <Route path="/admin/" element={<Admin />}>
+          <Route path="/admin/" element={<PrivateRoute ><Admin /></PrivateRoute> }>
             <Route index element={<AdminHome />} />
           </Route>
           //////////////////////////////////////////////////
