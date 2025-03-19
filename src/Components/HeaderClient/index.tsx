@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./styles.css";
 import CartIcon from "../CartIcon";
+import ConfigIcon from "../ConfigIcon";
 
 export default function HeaderClient() {
   return (
@@ -11,6 +12,9 @@ export default function HeaderClient() {
         </Link>
 
         <div className="devcom-navbar-right">
+
+          
+          <ConfigIcon />
           <CartIcon />
 
           <div className="devcom-nav-divs">

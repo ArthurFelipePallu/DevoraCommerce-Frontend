@@ -4,7 +4,7 @@ import { AxiosRequestConfig } from "axios";
 import { requestBackEnd } from "../utils/requests";
 import {CLIENT_ID,CLIENT_SECRET} from "../utils/system"
 import { TokenDTO } from "../Models/Authentication/token";
-import {AccessTokenPayloadDTO, CredentialsDTO} from "../Models/Authentication/auth";
+import {AccessTokenPayloadDTO, CredentialsDTO, RoleEnum} from "../Models/Authentication/auth";
 import * as TokenRepository from "../localStorage/authTokenRepository";
 
 export function loginRequest( loginData: CredentialsDTO){
@@ -56,6 +56,34 @@ export function isAuthenticated():boolean {
             && tokenPayload?.exp * 1000 > Date.now() // se token nao expirou
             ? true : false;
 }
+
+export function hasAnyRoles(roles : RoleEnum[]) : boolean{
+    if(roles.length === 0)
+        return true;
+    const tokenPayload = getAccessTokenPayload();
+    console.log(tokenPayload);
+   
+    if(tokenPayload !== undefined)
+    {
+        for(let i = 0; i< roles.length; i++){
+            if(tokenPayload.authorities.includes(roles[i]))
+                return true
+        }
+        
+
+    }
+    
+    return false;
+}
+
+export function hasRole(role:RoleEnum) : boolean{
+    const tokenPayload = getAccessTokenPayload();
+    if(tokenPayload !== undefined)
+        if(tokenPayload.authorities.includes(role))
+            return true 
+    return false;
+}
+
 
 function encodeBase64(toencode: string){
     return window.btoa(toencode);
