@@ -18,7 +18,7 @@ export function requestBackEnd(config: AxiosRequestConfig) {
     baseURL: BASE_URL,
     headers: requestHeaders,
   });
-}
+} 
 
 //REQUEST INTERCEPTOR
 axios.interceptors.request.use(

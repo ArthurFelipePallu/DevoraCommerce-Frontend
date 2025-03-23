@@ -27,7 +27,7 @@ export function loginRequest( loginData: CredentialsDTO){
    return requestBackEnd(config)
 }
 
-export function logout()
+export function logout() 
 {
     TokenRepository.clearToken();
 }
