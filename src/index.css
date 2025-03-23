@@ -115,10 +115,15 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
   display: flex;
   align-items: center;
 }
+.devcom-menu-interactable{
+  cursor: pointer;
+
+}
 .devcom-menu-item {
   margin-right: 20px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .devcom-menu-item img {
   width: 20px;

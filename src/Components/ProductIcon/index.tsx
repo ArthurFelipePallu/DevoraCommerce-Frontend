@@ -13,7 +13,7 @@ export default function ProductIcon() {
   return (
     <div className="devcom-header-product-item">
       <img src={productIcon} alt="Admin" />
-      <Link to="/cart">
+      <Link to="/admin/cart">
         <p>Produtos</p>
       </Link>      
         <div className="devcom-cart-count" >{contextCartCount}</div>

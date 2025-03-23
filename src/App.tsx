@@ -62,6 +62,8 @@ export default function App() {
               }
             >
               <Route index element={<AdminHome />} />
+              <Route path="cart" element={<Cart />} />
+              
             </Route>
             //////////////////////////////////////////////////
             <Route path="*" element={<Navigate to="/" />} />

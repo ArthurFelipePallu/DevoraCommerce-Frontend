@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./styles.css";
 import CartIcon from "../CartIcon";
 import ConfigIcon from "../ConfigIcon";
+import LoggedUser from "../LoggedUser";
 
 export default function HeaderClient() {
   return (
@@ -17,9 +18,7 @@ export default function HeaderClient() {
           <ConfigIcon />
           <CartIcon />
 
-          <div className="devcom-nav-divs">
-            <Link to="/login">Entrar</Link>
-          </div>
+          <LoggedUser />
         </div>
       </nav>
     </header>

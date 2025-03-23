@@ -5,7 +5,7 @@ import FormErrorMessage from "../../../Components/FormErrorMessage";
 import { CredentialsDTO } from "../../../Models/Authentication/auth";
 import { ContextToken } from "../../../utils/context-API";
 import { useNavigate } from "react-router-dom";
-
+import { history } from "../../../utils/history";
 
 export default function Login() {
 
@@ -27,8 +27,7 @@ export default function Login() {
             console.log(response.data);
             authService.saveAccessToken(response.data.access_token); 
             setContextTokenPayload(authService.getAccessTokenPayload());
-            navigate("/cart");
-
+            history.push("/admin");
     })
 
     setAuthenticationError(!authService.isAuthenticated())

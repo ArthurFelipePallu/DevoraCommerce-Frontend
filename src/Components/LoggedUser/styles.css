@@ -1,0 +1,22 @@
+.logged-user{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.logged-user-name{
+    color: var(--dsc-color-font-primary);
+}
+
+
+.logged-user-quit{
+    font-weight: 700;
+    color: var(--dsc-color-font-primary);
+    cursor: pointer;
+
+}
+.logged-user-quit:hover{
+    color: black;
+    text-decoration: underline;
+}
+
