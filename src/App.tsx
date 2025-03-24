@@ -9,15 +9,15 @@ import { useEffect, useState } from "react";
 import AdminHome from "./routes/Admin/AdminHome";
 import NumberForm from "./routes/Home/NumberForn";
 import { ContextToken } from "./utils/context-API";
+import * as cartService from "./services/cart-service";
 import * as authService from "./services/auth-service";
 import { ContextCartCount } from "./utils/context-cart";
 import { PrivateRoute } from "./Components/PrivateRoute";
 import ProductDetails from "./routes/Home/ProductDetails";
+import ConfirmationPage from "./routes/Home/Confirmation";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AccessTokenPayloadDTO } from "./Models/Authentication/auth";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
-import * as cartService from "./services/cart-service";
-import ConfirmationPage from "./routes/Home/Confirmation";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -51,7 +51,12 @@ export default function App() {
               />
               <Route path="number-form" element={<NumberForm />} />
               <Route path="cart" element={<Cart />} />
-              <Route path="confirmation/:orderId" element={<ConfirmationPage />} />
+              
+              <Route path="confirmation/:orderId" element={
+                <PrivateRoute>
+                  <ConfirmationPage />
+                </PrivateRoute>
+              } />
               <Route path="login" element={<Login />} />
             </Route>
             /////////////////////////////////////////////////

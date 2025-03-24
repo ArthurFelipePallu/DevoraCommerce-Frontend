@@ -29,7 +29,7 @@ export default function ConfirmationPage(){
    path: "/",
  };
 
-
+ 
   return (
     <main>
       <section id="cart-container-section" className="devcom-container">

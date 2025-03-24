@@ -23,7 +23,7 @@ const continueBuyingButton: ButtonDTO = {
   path: "/catalog",
 };
 const clearCartButton: ButtonDTO = {
-  id: 3,
+  id: 3, 
   name: "Limpar Carrinho",
   path: "",
 };
@@ -38,12 +38,13 @@ export default function Cart() {
 
   function handleFinish()
   {
-    const order: OrderDTO  = cart;
-    order.id = 35;
-    orderService.PostOrder(order);
-    cartService.clearCart();
-    updateCart();
-    history.push(`/confirmation/${order.id}`);
+    orderService.PostOrderRequest(cart).then( response => {
+      HandleClearClick();
+      history.push(`/confirmation/${response.data.id}`);
+    })
+    .catch( error =>{
+      console.log("[CART] New Order request" + error);
+    });
   }
 
   function handleIncreaseItem(productId: number) {
