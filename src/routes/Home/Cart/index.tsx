@@ -1,31 +1,31 @@
 import "./styles.css";
 
 import * as cartService from "../../../services/cart-service";
-//import CartProductCard from "../../../Components/CartComponents/CartProductCard";
+import * as orderService from "../../../services/order-service";
+
 import BlueButton from "../../../Components/Buttons/BlueButton";
 import { ButtonDTO } from "../../../Models/button";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import { useContext, useState } from "react";
 import { OrderDTO } from "../../../Models/order";
-import { Link } from "react-router-dom";
 import CartProductCard from "../../../Components/CartComponents/CartProductCard";
 import { ContextCartCount } from "../../../utils/context-cart";
-
+import { history } from "../../../utils/history";
 
 const finishOrderButton: ButtonDTO = {
   id: 1,
   name: "Finalizar Pedido",
-  path: "Leads to Nowhere",
+  path: "",
 };
 const continueBuyingButton: ButtonDTO = {
   id: 2,
   name: "Continuar Comprando",
-  path: "Leads to Nowhere",
+  path: "/catalog",
 };
 const clearCartButton: ButtonDTO = {
   id: 3,
   name: "Limpar Carrinho",
-  path: "Leads to Nowhere",
+  path: "",
 };
 export default function Cart() {
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
@@ -34,6 +34,16 @@ export default function Cart() {
   function HandleClearClick() {
     cartService.clearCart();
     updateCart();
+  }
+
+  function handleFinish()
+  {
+    const order: OrderDTO  = cart;
+    order.id = 35;
+    orderService.PostOrder(order);
+    cartService.clearCart();
+    updateCart();
+    history.push(`/confirmation/${order.id}`);
   }
 
   function handleIncreaseItem(productId: number) {
@@ -82,11 +92,13 @@ export default function Cart() {
         </div>
 
         <div className="dsc-btn-page-container">
-          <BlueButton button={finishOrderButton} />
-
-          <Link to={"/catalog"}>
-            <WhiteButton button={continueBuyingButton} />
-          </Link>
+          
+          <div onClick={handleFinish}>
+            <BlueButton button={finishOrderButton }  />
+          </div>
+          
+          <WhiteButton button={continueBuyingButton} />
+          
           <div onClick={HandleClearClick}>
             <BlueButton button={clearCartButton} />
           </div>

@@ -17,6 +17,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AccessTokenPayloadDTO } from "./Models/Authentication/auth";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import * as cartService from "./services/cart-service";
+import ConfirmationPage from "./routes/Home/Confirmation";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -50,6 +51,7 @@ export default function App() {
               />
               <Route path="number-form" element={<NumberForm />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="confirmation/:orderId" element={<ConfirmationPage />} />
               <Route path="login" element={<Login />} />
             </Route>
             /////////////////////////////////////////////////

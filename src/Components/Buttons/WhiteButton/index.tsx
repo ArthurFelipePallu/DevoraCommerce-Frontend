@@ -1,11 +1,22 @@
-import { ButtonDTO } from "../../../Models/button";
 import "./styles.css";
+import { history } from "../../../utils/history";
+import { ButtonDTO } from "../../../Models/button";
 
-type Props={
-  button:ButtonDTO;
-}
-export default function WhiteButton({button}:Props) {
+
+type Props = {
+  button: ButtonDTO;
+};
+export default function WhiteButton({ button }: Props) {
+  function goToPath() {
+    if (button.path != "") 
+      history.push(button.path);
+  }
   return (
-    <div className="devcom-btn devcom-btn-white responsive-btn">{button.name}</div>
+    <div
+      onClick={goToPath}
+      className="devcom-btn devcom-btn-white responsive-btn"
+    >
+      {button.name}
+    </div>
   );
 }
