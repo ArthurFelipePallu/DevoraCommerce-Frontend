@@ -30,10 +30,10 @@ export default function Catalog() {
     });
   }, [queryParams]);
 
-function handleSearch(searchText : string){
-  setCatalogList([]);
-  setQueryParams({...queryParams , page : 0 , name :searchText });
-}
+  function handleSearch(searchText : string){
+    setCatalogList([]);
+    setQueryParams({...queryParams , page : 0 , name :searchText });
+  }
 
 function handleNextPageClick(){
   setQueryParams({...queryParams, page : queryParams.page +1  });

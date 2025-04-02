@@ -18,6 +18,8 @@ import ConfirmationPage from "./routes/Home/Confirmation";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AccessTokenPayloadDTO } from "./Models/Authentication/auth";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import ProductListing from "./routes/Admin/ProductsListing";
+import ProductForm from "./routes/Admin/ProductForm";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -70,10 +72,11 @@ export default function App() {
             >
               <Route index element={<AdminHome />} />
               <Route path="cart" element={<Cart />} />
-              
+              <Route path="products" element={<ProductListing />} />
+              <Route path="products/:productId" element={<ProductForm />} />
             </Route>
             //////////////////////////////////////////////////
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/admin/" />} />
           </Routes>
         </HistoryRouter>
       </ContextCartCount.Provider>

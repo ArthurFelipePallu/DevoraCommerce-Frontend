@@ -8,6 +8,7 @@ export default function HeaderAdmin() {
   {
     history.push("/admin");
   }
+
   return (
     <header className="devcom-header-admin">
       <nav className="devcom-container">
