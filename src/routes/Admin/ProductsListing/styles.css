@@ -4,3 +4,12 @@
     margin-bottom: 20px;
 }
 
+.devcom-product-listing-header
+{
+    display:flex;
+    padding-left: 20px;
+}
+.devcom-product-listing-header-atributes
+{
+    font-weight: 700;
+}

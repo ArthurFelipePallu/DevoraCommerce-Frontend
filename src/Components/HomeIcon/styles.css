@@ -1,17 +1,3 @@
-.devcom-cart-count {
-  width: 18px;
-  height: 18px;
-  display: flex;
-  font-size: 10px;
-  color: white;
-  align-items: center;
-  border-radius: 50%;
-  justify-content: center;
-  background-color: red;
-  position: relative;
-  top: -14px;
-  left: -4px;
-}
 
 .devcom-header-product-item {
   width: 100px;

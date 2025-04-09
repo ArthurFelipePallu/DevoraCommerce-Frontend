@@ -48,10 +48,16 @@ export default function ProductListing() {
     <>
       <main>
         <section id="product-listing-section">
-            <div>
-                <BarradeBusca onSearchFilter={handleSearch}  />
-            </div>
+          <div>
+            <BarradeBusca onSearchFilter={handleSearch} />
+          </div>
+
           <div className="devcom-container">
+          <div className="devcom-card devcom-product-listing-header">
+            <p>Id</p>
+            <p>Preço</p>
+            <p>Nome</p>
+          </div>
             {productList.map((product) => (
               <ProductCRUDCard key={product.id} listedProduct={product} />
             ))}
