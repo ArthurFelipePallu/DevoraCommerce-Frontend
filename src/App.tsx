@@ -70,7 +70,8 @@ export default function App() {
                 </PrivateRoute>
               }
             >
-              <Route index element={<AdminHome />} />
+              <Route index element={<Navigate to="home" />} />
+              <Route path="home" element={<AdminHome />} />
               <Route path="cart" element={<Cart />} />
               <Route path="products" element={<ProductListing />} />
               <Route path="products/:productId" element={<ProductForm />} />

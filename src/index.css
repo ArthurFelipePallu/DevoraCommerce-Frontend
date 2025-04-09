@@ -120,7 +120,7 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
 
 .devcom-navbar-right {
   display: flex;
-  align-items: center;
+  align-items:flex-start;
 }
 .devcom-menu-interactable{
   cursor: pointer;

@@ -2,6 +2,9 @@
 .devcom-header-admin{
     background-color: var(--dsc-color-font-quaternary);
     color: var(--dsc-color-font-tertiary);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .admin-loged-user{
@@ -15,4 +18,12 @@
     font-size: 10px;
     
     
+}
+.admin-not-selected-Nav{
+    font-weight: 100;
+
+}
+.admin-selected-Nav{
+    font-weight: 700;
+
 }
