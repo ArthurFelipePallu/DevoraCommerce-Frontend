@@ -30,9 +30,12 @@ export default function ProductCRUDCard({ listedProduct }: Props) {
           </div>
          
          <div className="devcom-crud-product-card-center-information">
+          <div className="devcom-crud-product-price">
             <h3>R$: {listedProduct.price}</h3>
-
+          </div>
+          <div className="devcom-crud-product-name">
             <h3>{listedProduct.name}</h3>
+          </div>
          </div>
 
         </div>

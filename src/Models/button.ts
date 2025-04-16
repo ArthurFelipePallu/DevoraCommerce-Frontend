@@ -3,3 +3,9 @@ export type ButtonDTO={
     name:string;
     path:string;
 }
+
+export type ActionButtonDTO={
+    id:number;
+    name:string;
+    action:Function;
+}

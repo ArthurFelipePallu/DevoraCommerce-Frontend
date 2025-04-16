@@ -7,9 +7,23 @@
 .devcom-product-listing-header
 {
     display:flex;
-    padding-left: 20px;
+    
 }
 .devcom-product-listing-header-atributes
 {
     font-weight: 700;
+}
+
+
+.devcom-product-listing-header-id
+{
+    padding-left: 20px;
+}
+.devcom-product-listing-header-preco
+{
+    padding-left: 300px;
+}
+.devcom-product-listing-header-name
+{
+    padding-left: 200px;
 }

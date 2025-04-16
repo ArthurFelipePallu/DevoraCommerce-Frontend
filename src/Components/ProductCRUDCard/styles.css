@@ -6,6 +6,7 @@
 }
 
 .devcom-crud-item-container img {
+  margin-left: 30px;
   width: 78px;
   height: 78px;
 }
@@ -19,12 +20,22 @@
 }
 .devcom-crud-product-card-center-information{
   width: 70%;
+  margin-left: 100px;
   display: flex;
   align-items: center;
-  justify-content:space-between;
+  justify-content:space-evenly;
 
 }
-
+.devcom-crud-product-price{
+  width:150px;
+  display:flex;
+  justify-content: end;
+}
+.devcom-crud-product-name{
+  width:300px;
+  display:flex;
+  justify-content: end;
+}
 
 .devcom-crud-product-card-right-information{
   width: 78px;

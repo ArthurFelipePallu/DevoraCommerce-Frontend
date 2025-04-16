@@ -1,0 +1,31 @@
+
+
+.devcom-new-product-form input{
+
+  width:100%;
+  height: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.devcom-new-product-form input::placeholder{
+
+  padding-left: 15px;
+  font-weight: 700;
+  
+}
+
+
+.devcom-container-column-center{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+  }
+
+  
+
+.devcom-new-product-form-action-buttons{
+    width: 50%;
+    display:flex;
+    justify-content: space-around;
+}

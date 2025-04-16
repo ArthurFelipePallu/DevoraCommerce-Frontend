@@ -59,6 +59,9 @@ main {
 .devcom-mt40 {
   margin-top: 40px;
 }
+.devcom-ml10{
+  margin-left: 10px;
+}
 
 /*------------------------------------------------------------------------------------------------------------------*/
 /*  HEADER STYLES */
@@ -75,6 +78,7 @@ header {
   margin: 0 auto;
   margin-top: 30px;
 }
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -184,6 +188,8 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
   border: 1px solid var(--dsc-color-card-border);
   background-color: var(--dsc-color-card-bg);
 }
+
+
 
 /*------------------------------------------------------------------------------------------------------------------*/
 /*  PRODUCT STYLES */

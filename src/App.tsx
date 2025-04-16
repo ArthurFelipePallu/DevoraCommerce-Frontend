@@ -20,6 +20,7 @@ import { AccessTokenPayloadDTO } from "./Models/Authentication/auth";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import ProductListing from "./routes/Admin/ProductsListing";
 import ProductForm from "./routes/Admin/ProductForm";
+import NewProductForm from "./routes/Admin/NewProductForm";
 
 export default function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -74,6 +75,7 @@ export default function App() {
               <Route path="home" element={<AdminHome />} />
               <Route path="cart" element={<Cart />} />
               <Route path="products" element={<ProductListing />} />
+              <Route path="products/form" element={<NewProductForm />} />
               <Route path="products/:productId" element={<ProductForm />} />
             </Route>
             //////////////////////////////////////////////////
