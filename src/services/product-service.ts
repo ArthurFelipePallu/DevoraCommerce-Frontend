@@ -21,4 +21,13 @@ export function findById(id: number){
 }
 
 
+export function deleteProductByIdRequest(productId:number)
+{
+    const config : AxiosRequestConfig ={
+        method:"DELETE",
+        url:"/products/"+productId
+    }
 
+    return requestBackEnd(config);
+
+}
