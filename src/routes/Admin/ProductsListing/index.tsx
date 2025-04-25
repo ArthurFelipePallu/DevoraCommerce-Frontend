@@ -2,12 +2,13 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 import { ButtonDTO } from "../../../Models/button";
 import { ProductDTO } from "../../../Models/product";
-import SimpleModal from "../../../Components/DialogInfo";
 import BarradeBusca from "../../../Components/BarradeBusca";
+import SimpleModal from "../../../Components/Modals/SimpleModal";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import ProductCRUDCard from "../../../Components/ProductCRUDCard";
 import * as productService from "../../../services/product-service";
 import NextPageButton from "../../../Components/Buttons/NextPageButton";
+import ConfirmationModal from "../../../Components/Modals/ConfirmationModal";
 
 type QueryParams = {
   page: number;
@@ -36,12 +37,19 @@ export default function ProductListing() {
     size: 12,
     sort: "name",
   });
-  const dialogModal: SimpleModalDTO = {
-    message: "Sucesso",
-    buttonText: "OK",
-    action: changeModalVisibility
+  const dialogModal: ConfirmationModalDTO = {
+    message: "Confirme sua escolha",
+    confirmText: "OK",
+    denyText:"Cancel",
+    answerAction : handleConfirmationModalAnswer,
   };
 
+  function handleConfirmationModalAnswer(answer: boolean){
+
+    if(answer)  SearchLorOfTheRings();
+    else  handleNextPageClick();
+    changeModalVisibility();
+  }
   function changeModalVisibility()
   {
     setmodalVisibility( !modalVisibility);
@@ -57,6 +65,12 @@ export default function ProductListing() {
       })
       .catch((error) => {});
   }, [queryParams]);
+
+  function SearchLorOfTheRings()
+  {
+    handleSearch("Lord");
+    changeModalVisibility();
+  }
 
   function handleSearch(searchText: string) {
     setProductList([]);
@@ -97,7 +111,7 @@ export default function ProductListing() {
           </div>
         </section>
         {
-          modalVisibility && <SimpleModal data={dialogModal} />
+          modalVisibility && <ConfirmationModal data={dialogModal} />
         }
         
       </main>
