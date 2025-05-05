@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { requestBackEnd } from "../utils/requests";
+import { ProductDTO } from "../Models/product";
 
 
 export function findPageRequest( page:number, name:string, size:number = 12,sort:string = "name")  {
@@ -25,7 +26,21 @@ export function deleteProductByIdRequest(productId:number)
 {
     const config : AxiosRequestConfig ={
         method:"DELETE",
-        url:"/products/"+productId
+        url:`/products/${productId}`,
+        withCredentials: true
+    }
+
+    return requestBackEnd(config);
+
+}
+
+export function insertProductRequest(obj:ProductDTO)
+{
+    const config : AxiosRequestConfig ={
+        method:"POST",
+        url:"/products",
+        withCredentials: true,
+        data: obj
     }
 
     return requestBackEnd(config);

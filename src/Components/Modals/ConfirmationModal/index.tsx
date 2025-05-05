@@ -1,7 +1,4 @@
 import "./styles.css";
-import { ActionButtonDTO } from "../../../Models/button";
-import ActionBlueButton from "../../Buttons/ActionBlueButton";
-import ActionWhiteButton from "../../Buttons/ActionWhiteButton";
 
 type Props = {
   data: ConfirmationModalDTO;

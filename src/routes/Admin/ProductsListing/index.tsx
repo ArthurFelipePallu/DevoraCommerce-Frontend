@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { ButtonDTO } from "../../../Models/button";
 import { ProductDTO } from "../../../Models/product";
 import BarradeBusca from "../../../Components/BarradeBusca";
-import SimpleModal from "../../../Components/Modals/SimpleModal";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import ProductCRUDCard from "../../../Components/ProductCRUDCard";
 import * as productService from "../../../services/product-service";
@@ -25,9 +24,20 @@ const botaoCadastro: ButtonDTO = {
 
 export default function ProductListing() {
 
+  // const [dialogInfoData,setDialogInfoData] = useState({
+  //   visible: false,
+  //   message:
+  // });
+  const [mockproductIdToDelete,setmockProductIdToDelete]= useState(2);
+
+  const [productIdToDelete,setProductIdToDelete]= useState(-1);
   const [modalVisibility,setmodalVisibility]= useState(false);
 
   const [isLastPage, setLastPage] = useState(false);
+
+  const [modalConfirmAction, setModalConfirmAction] = useState<Function>(()=>{});
+  const [modalDenyAction, setModalDenyAction] = useState<Function>(() =>{});
+
 
   const [productList, setProductList] = useState<ProductDTO[]>([]);
 
@@ -44,16 +54,58 @@ export default function ProductListing() {
     answerAction : handleConfirmationModalAnswer,
   };
 
-  function handleConfirmationModalAnswer(answer: boolean){
 
-    if(answer)  SearchLorOfTheRings();
-    else  handleNextPageClick();
+  function handleConfirmationModalAnswer(answer: boolean ){
     changeModalVisibility();
+
+    if(answer)  modalConfirmAction();
+    else  modalDenyAction();
+  }
+
+  function doNothing()
+  {
+
+  }
+
+  function whatToDo(command:string,id:number)
+  {
+    if(command == "delete")
+    {
+      setmockProductIdToDelete(id);
+      setConfirmAndDenyActions( setProductToDelete , () => doNothing) 
+      
+    }
+    
+  }
+
+  function setConfirmAndDenyActions(confirm : Function , deny : Function)
+  {
+    setModalConfirmAction(confirm);
+    if(deny != null)
+      setModalDenyAction(deny);
+      
   }
   function changeModalVisibility()
   {
     setmodalVisibility( !modalVisibility);
   }
+
+
+
+  function setProductToDelete()
+  {
+    changeModalVisibility();
+    setProductIdToDelete(mockproductIdToDelete);
+  }
+
+
+  useEffect(() => {
+    productService.deleteProductByIdRequest(productIdToDelete)
+    .then( () => {
+      setProductList([]);
+      setQueryParams({ ...queryParams, page: 0});
+    });
+  }, [productIdToDelete]);
 
   useEffect(() => {
     productService
@@ -66,11 +118,7 @@ export default function ProductListing() {
       .catch((error) => {});
   }, [queryParams]);
 
-  function SearchLorOfTheRings()
-  {
-    handleSearch("Lord");
-    changeModalVisibility();
-  }
+
 
   function handleSearch(searchText: string) {
     setProductList([]);
@@ -100,11 +148,13 @@ export default function ProductListing() {
               <p className="devcom-product-listing-header-name">Nome</p>
             </div>
             {productList.map((product) => (
-              <ProductCRUDCard key={product.id} listedProduct={product} />
+              <ProductCRUDCard key={product.id}
+                               listedProduct={product}
+                               configureAction={whatToDo} />
             ))}
 
             {!isLastPage && (
-              <div onClick={changeModalVisibility } className="devcom-mt40">
+              <div onClick={handleNextPageClick } className="devcom-mt40">
                 <NextPageButton />
               </div>
             )}
