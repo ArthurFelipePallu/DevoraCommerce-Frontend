@@ -24,16 +24,16 @@ const botaoCadastro: ButtonDTO = {
 
 export default function ProductListing() {
 
-  // const [dialogInfoData,setDialogInfoData] = useState({
-  //   visible: false,
-  //   message:
-  // });
-  const [mockproductIdToDelete,setmockProductIdToDelete]= useState(2);
+  const [modalMessage,setModalMessage]= useState("");
 
-  const [productIdToDelete,setProductIdToDelete]= useState(-1);
-  const [modalVisibility,setmodalVisibility]= useState(false);
 
+  const [productId,setProductId]= useState(-1);
+  const [mockProductId,setMockProductId]= useState(-1);
+  
+  const [editNow,setEditNow]= useState(false);
+  const [deleteNow,setDeleteNow]= useState(false);
   const [isLastPage, setLastPage] = useState(false);
+  const [modalVisibility,setmodalVisibility]= useState(false);
 
   const [modalConfirmAction, setModalConfirmAction] = useState<Function>(()=>{});
   const [modalDenyAction, setModalDenyAction] = useState<Function>(() =>{});
@@ -47,65 +47,108 @@ export default function ProductListing() {
     size: 12,
     sort: "name",
   });
+
   const dialogModal: ConfirmationModalDTO = {
-    message: "Confirme sua escolha",
+    message: modalMessage,
     confirmText: "OK",
     denyText:"Cancel",
     answerAction : handleConfirmationModalAnswer,
   };
 
 
+  //Recebe resposta do modal e chama as funções atribuídas a resposta
   function handleConfirmationModalAnswer(answer: boolean ){
-    changeModalVisibility();
+    changeModalVisibility(); // desliga o modal
 
-    if(answer)  modalConfirmAction();
-    else  modalDenyAction();
+     if(answer)  modalConfirmAction();
+    else   modalDenyAction();
   }
 
+  // Função atribuida ao confirmAction do Modal 
+  // será chamada quando o comando do product card seja 'delete'
+  // e o usuário clique Cancelar no modal
   function doNothing()
   {
-
+    console.log("Did Nothing");
   }
 
-  function whatToDo(command:string,id:number)
+  // Função atribuida ao confirmAction do Modal 
+  // será chamada quando o comando do product card seja 'delete'
+  // e o usuário clique OK no modal
+  function EditProduct()
   {
+      setEditNow(true);
+  }
+
+  // Função atribuida ao confirmAction do Modal 
+  // será chamada quando o comando do product card seja 'delete'
+  // e o usuário clique OK no modal
+  function DeleteProduct()
+  {
+        setDeleteNow(true);
+  }
+
+  // recebe comando do product card e altera as funções de confirm e deny do
+  // modal de acordo com o comando
+  function setProductCardsCommandActions(command:string,id:number) 
+  {        
+    setMockProductId(id);// armazena id a ser deletado se for o que usuário deseja fazer mesmo
+    changeModalVisibility(); // liga modal
+
     if(command == "delete")
     {
-      setmockProductIdToDelete(id);
-      setConfirmAndDenyActions( setProductToDelete , () => doNothing) 
-      
+      setModalMessage("Deletar Item : " + id + " ?");
+      setConfirmAndDenyActions(() =>  DeleteProduct , () => doNothing) // altera as funçoes de confirm e deny do modal
+    }
+    else if(command == "edit")
+    {
+      setModalMessage("Editar Item : " + id + " ?");
+      setConfirmAndDenyActions(() =>  EditProduct , () => doNothing) // altera as funçoes de confirm e deny do modal
     }
     
   }
 
+  // seta as funções de commfirmação e negação atribuídas as respostas do modal
   function setConfirmAndDenyActions(confirm : Function , deny : Function)
   {
-    setModalConfirmAction(confirm);
+    if(confirm != null)
+      setModalConfirmAction(confirm);
     if(deny != null)
       setModalDenyAction(deny);
-      
   }
+
+  // Ativa e desativa o modal
   function changeModalVisibility()
   {
     setmodalVisibility( !modalVisibility);
   }
 
-
-
-  function setProductToDelete()
-  {
-    changeModalVisibility();
-    setProductIdToDelete(mockproductIdToDelete);
-  }
+  useEffect(() => {
+    setProductId(mockProductId);
+  }, [mockProductId]);
 
 
   useEffect(() => {
-    productService.deleteProductByIdRequest(productIdToDelete)
+
+    if(productId == -1 || !deleteNow) return;
+    
+    productService.deleteProductByIdRequest(mockProductId)
     .then( () => {
       setProductList([]);
       setQueryParams({ ...queryParams, page: 0});
     });
-  }, [productIdToDelete]);
+    setDeleteNow(false);
+  }, [productId, deleteNow]);
+
+
+  useEffect(() => {
+
+    if(productId == -1 || !editNow) return;
+    
+      console.log("editando produto : " +  mockProductId );
+
+    setEditNow(false);
+  }, [productId, editNow]);
 
   useEffect(() => {
     productService
@@ -115,7 +158,7 @@ export default function ProductListing() {
         setLastPage(response.data.last);
         setProductList(productList.concat(nextPage));
       })
-      .catch((error) => {});
+      .catch((error) => {console.log(error)});
   }, [queryParams]);
 
 
@@ -150,7 +193,7 @@ export default function ProductListing() {
             {productList.map((product) => (
               <ProductCRUDCard key={product.id}
                                listedProduct={product}
-                               configureAction={whatToDo} />
+                               configureAction={setProductCardsCommandActions} />
             ))}
 
             {!isLastPage && (

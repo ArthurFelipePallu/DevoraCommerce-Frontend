@@ -24,6 +24,7 @@ export function findById(id: number){
 
 export function deleteProductByIdRequest(productId:number)
 {
+    console.log("Deleting product : " + productId);
     const config : AxiosRequestConfig ={
         method:"DELETE",
         url:`/products/${productId}`,

@@ -12,6 +12,10 @@ type Props = {
 
 export default function ProductCRUDCard({ listedProduct ,configureAction }: Props) {
 
+  function configureEdit()
+  {
+    configureAction("edit",listedProduct.id );
+  }
   function configureDelete()
   {
     configureAction("delete",listedProduct.id );
@@ -46,7 +50,7 @@ export default function ProductCRUDCard({ listedProduct ,configureAction }: Prop
         <div className="devcom-crud-product-card-right-information">
           
           <div
-            onClick={() => {}}
+            onClick={configureEdit}
             className="devcom-menu-item "
           >
             <img src={editIcon} alt="Edit"></img>
