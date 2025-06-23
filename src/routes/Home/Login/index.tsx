@@ -40,7 +40,7 @@ export default function Login() {
 
   function handleSubmit(event:any){
     event.preventDefault();
-    authService.loginRequest({username : loginInfo.username.value , password : loginInfo.password.value})
+    authService.loginRequest(forms.toValues(loginInfo))
      .then(response =>{
             console.log(response.data);
             authService.saveAccessToken(response.data.access_token); 
