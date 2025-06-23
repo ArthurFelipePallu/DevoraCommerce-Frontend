@@ -14,11 +14,11 @@ export default function ProductCRUDCard({ listedProduct ,configureAction }: Prop
 
   function configureEdit()
   {
-    configureAction("edit",listedProduct.id );
+    configureAction("edit",listedProduct.id , listedProduct.name );
   }
   function configureDelete()
   {
-    configureAction("delete",listedProduct.id );
+    configureAction("delete",listedProduct.id , listedProduct.name);
   }
   function goToProductForm() {
     history.push("/admin/products/" + listedProduct.id);

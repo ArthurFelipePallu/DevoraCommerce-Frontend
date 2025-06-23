@@ -6,6 +6,7 @@ import { CredentialsDTO } from "../../../Models/Authentication/auth";
 import { ContextToken } from "../../../utils/context-API";
 import { useNavigate } from "react-router-dom";
 import { history } from "../../../utils/history";
+import FormInput from "../../../Components/FormInput";
 
 export default function Login() {
 
@@ -13,16 +14,33 @@ export default function Login() {
 
   const {setContextTokenPayload} = useContext(ContextToken);
 
-  const [loginInfo, setloginInfo] = useState<CredentialsDTO>({
-                                                                username: "",
-                                                                password: "",
-                                                              });
+  const [loginInfo, setloginInfo] = useState<any>({
+                                              username:{
+                                                value: "",
+                                                id:"username",
+                                                name:"username",
+                                                type:"text",
+                                                placeholder:"Email",
+                                                validation: function(value:string){
+                                                  return /^[a-zA-Z0-9.!#$%&*+=?^_´{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+                                                },
+                                                message:"Favor informar Email válido"
+                                              },
+                                              password:{
+                                                value: "",
+                                                id:"password",
+                                                name:"password",
+                                                type:"password",
+                                                placeholder:"Senha",
+                                                message:"Favor informar Senha válida"
+                                              }
+                                            });
 
   const [authenticationError,setAuthenticationError] = useState<boolean>(false);
 
   function handleSubmit(event:any){
     event.preventDefault();
-    authService.loginRequest(loginInfo)
+    authService.loginRequest({username : loginInfo.username.value , password : loginInfo.password.value})
      .then(response =>{
             console.log(response.data);
             authService.saveAccessToken(response.data.access_token); 
@@ -37,9 +55,9 @@ export default function Login() {
   function handleLoginCheck() {}
 
   function handleFormInputChange(event: any) {
-    const value = event.target.value;
+    const newValue = event.target.value;
     const name = event.target.name;
-    setloginInfo({ ...loginInfo, [name]: value });
+    setloginInfo({ ...loginInfo, [name]: {...loginInfo[name],value:newValue } });
   }
 
   return (
@@ -49,31 +67,25 @@ export default function Login() {
           <div className="login-form-container">
             <form onSubmit={handleSubmit} >
               <div className="login-form-input-conatiner">
-                <input
-                  type="text"
-                  name="username"
-                  value={loginInfo.username}
-                  placeholder="Email"
+                <FormInput
+                  { ...loginInfo.username }
                   className="login-form-input"
                   onChange={handleFormInputChange}
                 />
                 <FormErrorMessage
                   errorOcurred={authenticationError}
-                  errorMessage="Incorrect user email"
+                  errorMessage={loginInfo.username.message}
                 />
               </div>
               <div className="login-form-input-conatiner">
-                <input
-                  type="password"
-                  name="password"
-                  value={loginInfo.password}
-                  placeholder="Password"
+                <FormInput
+                  { ...loginInfo.password }
                   className="login-form-input"
                   onChange={handleFormInputChange}
                 />
                 <FormErrorMessage
                   errorOcurred={authenticationError}
-                  errorMessage="Incorrect password"
+                  errorMessage={loginInfo.password.message}
                 />
               </div>
               <button
