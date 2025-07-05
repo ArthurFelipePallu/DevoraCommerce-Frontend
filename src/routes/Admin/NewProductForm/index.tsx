@@ -29,12 +29,15 @@ export default function NewProductForm()
                                                 message:"Favor informar um nome válido"
                                               },
                                               price:{
-                                                value: "",
+                                                value: 15,
                                                 id:"price",
                                                 name:"price",
                                                 type:"number",
-                                                placeholder:"Product Price",
-                                                message:"Favor informar um valor válido"
+                                                placeholder:"Product Price",                                                
+                                                validation: function(value:any){
+                                                  return Number(value) > 0;
+                                                },
+                                                message:"Favor informar um valor positivo",
                                               },
                                               imgUrl:{
                                                 value: "",
@@ -51,6 +54,8 @@ export default function NewProductForm()
 
                                             
     useEffect( () => {
+        const obj = forms.validate(formData,"price");
+        console.log(obj);
         if(isEditing)
         {
             const id = Number(params.productId);

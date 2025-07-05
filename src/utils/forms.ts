@@ -29,3 +29,17 @@ export function toValues(inputs:any)
     }
     return data;
 }
+
+/// utiliza a função de validação do próprio campo ( se tiver )
+/// para verificar a veracidade dos dados contido no campo value
+/// e adiciona um novo campo ao input especifico dizendo se o valor 
+/// dele é INVÁLIDO
+export function validate(inputs : any , name : string)
+{
+    /// Verifica se campo do forms possui função de validação
+    if( !inputs[name].validation ) return inputs;
+
+    const isInvalid = !inputs[name].validation( inputs[name].value );
+
+   return {...inputs, [name] : {...inputs[name], invalid : isInvalid.toString() } };
+}
