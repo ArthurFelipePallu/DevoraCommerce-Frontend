@@ -13,8 +13,13 @@
 {
     font-weight: 700;
 }
+.devcom-product-listing-cadastrar{
+    margin-bottom: 30px;
+}
 
-
+.devcom-product-listing-search{
+    margin-bottom: 30px;
+}
 .devcom-product-listing-header-id
 {
     padding-left: 20px;

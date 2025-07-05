@@ -1,14 +1,16 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
+import { history } from "../../../utils/history";
 import { ButtonDTO } from "../../../Models/button";
 import { ProductDTO } from "../../../Models/product";
 import BarradeBusca from "../../../Components/BarradeBusca";
+import SimpleModal from "../../../Components/Modals/SimpleModal";
 import WhiteButton from "../../../Components/Buttons/WhiteButton";
 import ProductCRUDCard from "../../../Components/ProductCRUDCard";
 import * as productService from "../../../services/product-service";
 import NextPageButton from "../../../Components/Buttons/NextPageButton";
 import ConfirmationModal from "../../../Components/Modals/ConfirmationModal";
-import SimpleModal from "../../../Components/Modals/SimpleModal";
+
 
 type QueryParams = {
   page: number;
@@ -20,7 +22,7 @@ type QueryParams = {
 const botaoCadastro: ButtonDTO = {
   id: 1,
   name: "Novo Produto",
-  path: "/admin/products/form",
+  path: "/admin/products/create",
 };
 
 export default function ProductListing() {
@@ -167,8 +169,8 @@ export default function ProductListing() {
 
     if(productId == -1 || !editNow) return;
     
-      console.log("editando produto : " +  mockProductId );
-
+     // console.log("editando produto : " +  mockProductId );
+      history.push("/admin/products/"+productId);
     setEditNow(false);
   }, [productId, editNow]);
 
@@ -203,7 +205,7 @@ export default function ProductListing() {
               <WhiteButton button={botaoCadastro} />
             </div>
 
-            <div>
+            <div className="devcom-product-listing-search">
               <BarradeBusca onSearchFilter={handleSearch} />
             </div>
 

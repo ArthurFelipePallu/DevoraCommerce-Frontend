@@ -1,25 +1,80 @@
 import "./styles.css"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import  * as forms from "../../../utils/forms";
+import { history } from "../../../utils/history";
+import FormInput from "../../../Components/FormInput";
 import { ActionButtonDTO } from "../../../Models/button";
-import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
 import ActionBlueButton from "../../../Components/Buttons/ActionBlueButton";
-import { useState } from "react";
-
+import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
+import * as productService from "../../../services/product-service";
 
 export default function NewProductForm()
 {
 
-    const [formProductName,setFormProductName] = useState<string>("");
-    const [formProductPrice,setFormProductPrice] = useState<string>("");
-    const [formProductImage,setFormProductImage] = useState(null);
+    const params = useParams();
+
+    const isEditing = params.productId !== 'create'; 
+
+  const [formData, setFormData] = useState<any>({
+                                              name:{
+                                                value: "",
+                                                id:"name",
+                                                name:"name",
+                                                type:"text",
+                                                placeholder:"Product Name",
+                                                validation: function(value:string){
+                                                  return /^[a-zA-Z0-9.!#$%&*+=?^_´{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+                                                },
+                                                message:"Favor informar um nome válido"
+                                              },
+                                              price:{
+                                                value: "",
+                                                id:"price",
+                                                name:"price",
+                                                type:"number",
+                                                placeholder:"Product Price",
+                                                message:"Favor informar um valor válido"
+                                              },
+                                              imgUrl:{
+                                                value: "",
+                                                id:"imgUrl",
+                                                name:"imgUrl",
+                                                type:"text",
+                                                placeholder:"Imagem",
+                                                message:"Favor carregar uma imagem válida"
+                                              }
+                                            });
+
+
+
+
+                                            
+    useEffect( () => {
+        if(isEditing)
+        {
+            const id = Number(params.productId);
+            productService.findById(id).then( response => {
+                //console.log(response.data);
+                const newFormData = forms.updateAll(formData,response.data);
+                setFormData(newFormData);
+            } );
+        }
+    } , []);
 
     function CancelForm()
     {
-
+        returnTo("/admin/products");
     }
     function SaveForm()
     {
-
+        returnTo("/admin/products");
     }
+    function returnTo(path:string)
+    {
+        history.push(path);
+    }
+
     const CancelButton:ActionButtonDTO ={
         id:1,
         name:"Cancelar",
@@ -31,11 +86,14 @@ export default function NewProductForm()
         action:SaveForm
     }
 
-    function imageSelected(e : any)
+    function imageSelected(event : any)
     {
-        setFormProductImage(e.target.files[0]);
+        forms.update(formData,event.target.name,event.target.files[0]);
     }
-
+    function updateForm(event : any)
+    {
+        setFormData(forms.update(formData,event.target.name,event.target.value));
+    }
 
 
     return(
@@ -44,42 +102,34 @@ export default function NewProductForm()
                 <div className="devcom-container devcom-card devcom-container-column-center">
                     <h1>DADOS DO PRODUTO</h1>
                     <form className="devcom-container-column-center devcom-new-product-form">
-                        <input 
-                            id="productName"
-                            name="productName"
-                            type="text"
-                            placeholder="Product Name"
-                            value={formProductName || ""}
-                            onChange={ e => setFormProductName(e.target.value)}
-
+                        <FormInput 
+                            {...formData.name}
+                            onChange={updateForm}
                          />
-                         <input 
-                            id="productPrice"
-                            name="productPrice"
-                            type="text"
-                            placeholder="Product Price"
-                            value={formProductPrice || ""}
-                            onChange={ e => setFormProductPrice(e.target.value)}
+                         <FormInput 
+                           {...formData.price}
+                            onChange={updateForm}
                          />
                         
 
                         
                          {
-                            formProductImage && 
-                            formProductImage !== null ? (
+                            formData.imgUrl.value && 
+                            formData.imgUrl.value !== "" ? (
                                 <>
-                                    <img src={URL.createObjectURL(formProductImage)} 
+                                    {/* <img src={URL.createObjectURL(formData.imgUrl.value)} 
                                         alt="not found" 
                                         width={"250px"}/>
-                                    <button onClick={() => setFormProductImage(null)}>Remove</button>
+                                    <button onClick={() => forms.update(formData,formData.imgUrl.name,null)}>Remove</button> */}
+                                    <FormInput 
+                                    {...formData.imgUrl}
+                                    onChange={imageSelected}
+                                />
                                 </>                               
                             ) : 
                             (
-                                <input 
-                                    id="productImage"
-                                    name="productImage"
-                                    title="Select Image"
-                                    type="file"
+                                <FormInput 
+                                    {...formData.imgUrl}
                                     onChange={imageSelected}
                                 />
                             )
