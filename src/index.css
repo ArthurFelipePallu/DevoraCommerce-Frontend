@@ -314,6 +314,22 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
   color: var(--dsc-color-font-placeholder);
 }
 
+
+
+.devcom-form-error{
+    color: var(--dsc-color-font-warning);
+    font-size: 12px;
+    padding-left: 4px;
+    display: none;
+}
+
+.devcom-form-control[data-invalid="true"] {
+    border: 1px solid var(--dsc-color-font-warning);
+}
+.devcom-form-control[data-invalid="true"] ~ div { /* próximo elemento div após o que estiver com data-invalid = true  recebe o display:unset*/
+    display: unset;    
+} 
+
 .devcom-form-aviso {
   font-size: 12px;
   font-weight: 400;

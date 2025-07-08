@@ -75,7 +75,6 @@ export default function App() {
               <Route path="home" element={<AdminHome />} />
               <Route path="cart" element={<Cart />} />
               <Route path="products" element={<ProductListing />} />
-              <Route path="products/create" element={<NewProductForm />} />
               <Route path="products/:productId" element={<NewProductForm />} />
             </Route>
             //////////////////////////////////////////////////

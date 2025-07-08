@@ -5,9 +5,9 @@ import  * as forms from "../../../utils/forms";
 import { history } from "../../../utils/history";
 import FormInput from "../../../Components/FormInput";
 import { ActionButtonDTO } from "../../../Models/button";
+import * as productService from "../../../services/product-service";
 import ActionBlueButton from "../../../Components/Buttons/ActionBlueButton";
 import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
-import * as productService from "../../../services/product-service";
 
 export default function NewProductForm()
 {
@@ -29,7 +29,7 @@ export default function NewProductForm()
                                                 message:"Favor informar um nome válido"
                                               },
                                               price:{
-                                                value: 15,
+                                                value: "",
                                                 id:"price",
                                                 name:"price",
                                                 type:"number",
@@ -54,13 +54,10 @@ export default function NewProductForm()
 
                                             
     useEffect( () => {
-        const obj = forms.validate(formData,"price");
-        console.log(obj);
         if(isEditing)
         {
             const id = Number(params.productId);
             productService.findById(id).then( response => {
-                //console.log(response.data);
                 const newFormData = forms.updateAll(formData,response.data);
                 setFormData(newFormData);
             } );
@@ -97,7 +94,14 @@ export default function NewProductForm()
     }
     function updateForm(event : any)
     {
-        setFormData(forms.update(formData,event.target.name,event.target.value));
+        // data do forms atualizado
+        const updatedData = forms.update(formData,event.target.name,event.target.value);
+
+        //forms validado
+        const validatedData = forms.validate(updatedData,event.target.name);
+
+        //finalmente forms setado para valores novos
+        setFormData(validatedData);
     }
 
 
@@ -107,16 +111,23 @@ export default function NewProductForm()
                 <div className="devcom-container devcom-card devcom-container-column-center">
                     <h1>DADOS DO PRODUTO</h1>
                     <form className="devcom-container-column-center devcom-new-product-form">
-                        <FormInput 
-                            {...formData.name}
-                            onChange={updateForm}
-                         />
-                         <FormInput 
-                           {...formData.price}
-                            onChange={updateForm}
-                         />
-                        
+                        <div>
+                            <FormInput 
+                                {...formData.name}
+                                onChange={updateForm}
+                                className="devcom-form-control"
+                            />
+                            <div className="devcom-form-error" >{formData.name.message}</div>
+                        </div>
+                        <div>
+                            <FormInput 
+                            {...formData.price}
+                                onChange={updateForm}
+                                className="devcom-form-control"
+                            />
+                            <div className="devcom-form-error" >{formData.price.message}</div>
 
+                        </div>
                         
                          {
                             formData.imgUrl.value && 
