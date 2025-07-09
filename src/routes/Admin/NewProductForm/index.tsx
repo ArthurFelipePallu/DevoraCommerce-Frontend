@@ -94,19 +94,14 @@ export default function NewProductForm()
     }
     function updateForm(event : any)
     {
-        // data do forms atualizado
-        const updatedData = forms.update(formData,event.target.name,event.target.value);
-
-        //forms validado
-        const validatedData = forms.validate(updatedData,event.target.name);
-
+        //forms atualizado e validado
+        const result = forms.updateAndValidate(formData,event.target.name,event.target.value);
         //finalmente forms setado para valores novos
-        setFormData(validatedData);
+        setFormData(result);
     }
     function turnInputDirty(name : string)
     {
-        const newFormData = forms.toDirty(formData,name);
-        setFormData(newFormData);
+        setFormData(forms.dirtyAndValidate(formData,name));
     }
 
 

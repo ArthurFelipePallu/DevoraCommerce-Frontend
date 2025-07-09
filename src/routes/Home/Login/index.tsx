@@ -54,11 +54,18 @@ export default function Login() {
 
   function handleLoginCheck() {}
 
-  function handleFormInputChange(event: any) {
-    const newValue = event.target.value;
-    const name = event.target.name;
-    setloginInfo(forms.update(loginInfo,name,newValue));
-  }
+    function updateFormInput(event : any)
+    {
+        //forms atualizado e validado
+        const result = forms.updateAndValidate(loginInfo,event.target.name,event.target.value);
+        //finalmente forms setado para valores novos
+        setloginInfo(result);
+    }
+    function turnInputDirty(name : string)
+    {
+        setloginInfo(forms.dirtyAndValidate(loginInfo,name));
+    }
+
 
   return (
     <>
@@ -70,7 +77,8 @@ export default function Login() {
                 <FormInput
                   { ...loginInfo.username }
                   className="login-form-input"
-                  onChange={handleFormInputChange}
+                  onChange={updateFormInput}
+                  onTurnDirty={turnInputDirty}
                 />
                 <FormErrorMessage
                   errorOcurred={authenticationError}
@@ -81,7 +89,8 @@ export default function Login() {
                 <FormInput
                   { ...loginInfo.password }
                   className="login-form-input"
-                  onChange={handleFormInputChange}
+                  onChange={updateFormInput}
+                  onTurnDirty={turnInputDirty}
                 />
                 <FormErrorMessage
                   errorOcurred={authenticationError}

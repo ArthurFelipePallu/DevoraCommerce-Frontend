@@ -44,10 +44,21 @@ export function validate(inputs : any , name : string)
    return {...inputs, [name] : {...inputs[name], invalid : isInvalid.toString() } };
 }
 
+export function updateAndValidate(inputs:any , name:string , newValue:any)
+{
+    const updated = update(inputs,name, newValue);
+    return validate(updated,name);
+}
 
 //Gera um novo objeto de formulário contendo o campo "Dirty" (booleano) para o campo
 // do formulário que está sendo alterado.
 export function toDirty(inputs : any , name : string)
 {
     return {...inputs, [name] : { ...inputs[name], dirty : "true" } }
+}
+
+export function dirtyAndValidate(inputs : any , name : string)
+{
+    const dirty = toDirty(inputs,name);
+    return validate(dirty,name);
 }
