@@ -43,3 +43,11 @@ export function validate(inputs : any , name : string)
 
    return {...inputs, [name] : {...inputs[name], invalid : isInvalid.toString() } };
 }
+
+
+//Gera um novo objeto de formulário contendo o campo "Dirty" (booleano) para o campo
+// do formulário que está sendo alterado.
+export function toDirty(inputs : any , name : string)
+{
+    return {...inputs, [name] : { ...inputs[name], dirty : "true" } }
+}

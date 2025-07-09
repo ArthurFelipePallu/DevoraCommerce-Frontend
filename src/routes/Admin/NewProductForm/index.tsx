@@ -103,6 +103,11 @@ export default function NewProductForm()
         //finalmente forms setado para valores novos
         setFormData(validatedData);
     }
+    function turnInputDirty(name : string)
+    {
+        const newFormData = forms.toDirty(formData,name);
+        setFormData(newFormData);
+    }
 
 
     return(
@@ -116,6 +121,7 @@ export default function NewProductForm()
                                 {...formData.name}
                                 onChange={updateForm}
                                 className="devcom-form-control"
+                                onTurnDirty={turnInputDirty}
                             />
                             <div className="devcom-form-error" >{formData.name.message}</div>
                         </div>
@@ -124,9 +130,9 @@ export default function NewProductForm()
                             {...formData.price}
                                 onChange={updateForm}
                                 className="devcom-form-control"
+                                onTurnDirty={turnInputDirty}
                             />
                             <div className="devcom-form-error" >{formData.price.message}</div>
-
                         </div>
                         
                          {
