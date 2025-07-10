@@ -330,6 +330,12 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
     display: unset;    
 } 
 
+.devcom-textarea{
+  resize: none;
+  height: 128px;
+  padding-top: 10px;
+}
+
 .devcom-form-aviso {
   font-size: 12px;
   font-weight: 400;

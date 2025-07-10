@@ -8,6 +8,7 @@ import { ActionButtonDTO } from "../../../Models/button";
 import * as productService from "../../../services/product-service";
 import ActionBlueButton from "../../../Components/Buttons/ActionBlueButton";
 import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
+import FormTextArea from "../../../Components/FormTextArea";
 
 export default function NewProductForm()
 {
@@ -48,17 +49,17 @@ export default function NewProductForm()
                                                 placeholder:"Imagem",
                                                 message:"Favor carregar uma imagem válida"
                                               },
-                                              phone:{
+                                              description:{
                                                 value: "",
-                                                id:"phone",
-                                                name:"phone",
+                                                id:"description",
+                                                name:"description",
                                                 type:"text",
-                                                placeholder:"Phone Number",
-                                                validation: function(value:any){
-                                                    //expresão regular REGEX com formato de telefone
-                                                  return /^\(?(?:[14689][0-9]|2[12478]|3([1-5]|[7-8])|5([13-5])|7[193-7])\)?[ ]?([0-9]{4,5})[- ]?([0-9]{4})$/.test(value.toLowerCase()); 
+                                                placeholder:"Descrição do produto",
+                                                validation: function(value:string){
+                                                    //expresão regular REGEX com minimo 10 caracteres e sem máximo
+                                                  return /^.{10,}$/.test(value); 
                                                 },
-                                                message:"Favor informar um numero de telefone válido"
+                                                message:"Descrição deve ter pelo menos 10 caracteres"
                                               }
                                             });
 
@@ -143,13 +144,13 @@ export default function NewProductForm()
                             <div className="devcom-form-error" >{formData.price.message}</div>
                         </div>
                         <div>
-                            <FormInput 
-                            {...formData.phone}
+                            <FormTextArea 
+                            {...formData.description}
                                 onChange={updateForm}
-                                className="devcom-form-control"
+                                className="devcom-form-control devcom-textarea"
                                 onTurnDirty={turnInputDirty}
                             />
-                            <div className="devcom-form-error" >{formData.phone.message}</div>
+                            <div className="devcom-form-error" >{formData.description.message}</div>
                         </div>
                          {
                             formData.imgUrl.value && 
