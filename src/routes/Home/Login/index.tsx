@@ -74,28 +74,26 @@ export default function Login() {
           <div className="login-form-container">
             <form onSubmit={handleSubmit} >
               <div className="login-form-input-conatiner">
-                <FormInput
-                  { ...loginInfo.username }
-                  className="login-form-input"
-                  onChange={updateFormInput}
-                  onTurnDirty={turnInputDirty}
-                />
-                <FormErrorMessage
-                  errorOcurred={authenticationError}
-                  errorMessage={loginInfo.username.message}
-                />
+                <div>
+                    <FormInput 
+                        {...loginInfo.username}
+                        onChange={updateFormInput}
+                        className="devcom-form-control"
+                        onTurnDirty={turnInputDirty}
+                    />
+                    <div className="devcom-form-error" >{loginInfo.username.message}</div>
+                </div>
               </div>
               <div className="login-form-input-conatiner">
-                <FormInput
-                  { ...loginInfo.password }
-                  className="login-form-input"
-                  onChange={updateFormInput}
-                  onTurnDirty={turnInputDirty}
-                />
-                <FormErrorMessage
-                  errorOcurred={authenticationError}
-                  errorMessage={loginInfo.password.message}
-                />
+                <div>
+                    <FormInput 
+                        {...loginInfo.password }
+                        onChange={updateFormInput}
+                        className="devcom-form-control"
+                        onTurnDirty={turnInputDirty}
+                    />
+                    <div className="devcom-form-error" >{loginInfo.password.message}</div>
+                </div>
               </div>
               <button
                 type="submit"

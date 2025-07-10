@@ -24,9 +24,10 @@ export default function NewProductForm()
                                                 type:"text",
                                                 placeholder:"Product Name",
                                                 validation: function(value:string){
-                                                  return /^[a-zA-Z0-9.!#$%&*+=?^_´{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value.toLowerCase());
+                                                  const regex = /^[a-zA-Z0-9\s\.,_-]+$/;//expresão regular REGEX - específica uma maneiraque o texto deve ser escrito, como formatos de telefones, email , etc
+                                                  return regex.test(value); 
                                                 },
-                                                message:"Favor informar um nome válido"
+                                                message:"Favor informar um nome válido com primeiras letras maíusculas e sem números"
                                               },
                                               price:{
                                                 value: "",
@@ -46,6 +47,18 @@ export default function NewProductForm()
                                                 type:"text",
                                                 placeholder:"Imagem",
                                                 message:"Favor carregar uma imagem válida"
+                                              },
+                                              phone:{
+                                                value: "",
+                                                id:"phone",
+                                                name:"phone",
+                                                type:"text",
+                                                placeholder:"Phone Number",
+                                                validation: function(value:any){
+                                                    //expresão regular REGEX com formato de telefone
+                                                  return /^\(?(?:[14689][0-9]|2[12478]|3([1-5]|[7-8])|5([13-5])|7[193-7])\)?[ ]?([0-9]{4,5})[- ]?([0-9]{4})$/.test(value.toLowerCase()); 
+                                                },
+                                                message:"Favor informar um numero de telefone válido"
                                               }
                                             });
 
@@ -96,7 +109,7 @@ export default function NewProductForm()
     {
         //forms atualizado e validado
         const result = forms.updateAndValidate(formData,event.target.name,event.target.value);
-        //finalmente forms setado para valores novos
+        //forms setado para valores novos
         setFormData(result);
     }
     function turnInputDirty(name : string)
@@ -129,7 +142,15 @@ export default function NewProductForm()
                             />
                             <div className="devcom-form-error" >{formData.price.message}</div>
                         </div>
-                        
+                        <div>
+                            <FormInput 
+                            {...formData.phone}
+                                onChange={updateForm}
+                                className="devcom-form-control"
+                                onTurnDirty={turnInputDirty}
+                            />
+                            <div className="devcom-form-error" >{formData.phone.message}</div>
+                        </div>
                          {
                             formData.imgUrl.value && 
                             formData.imgUrl.value !== "" ? (
