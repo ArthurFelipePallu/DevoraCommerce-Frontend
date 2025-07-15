@@ -4,11 +4,14 @@ import { useParams } from "react-router-dom";
 import  * as forms from "../../../utils/forms";
 import { history } from "../../../utils/history";
 import FormInput from "../../../Components/FormInput";
+import { CategoryDTO } from "../../../Models/category";
 import { ActionButtonDTO } from "../../../Models/button";
+import FormTextArea from "../../../Components/FormTextArea";
 import * as productService from "../../../services/product-service";
+import * as categoryService from "../../../services/category-service";
 import ActionBlueButton from "../../../Components/Buttons/ActionBlueButton";
 import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
-import FormTextArea from "../../../Components/FormTextArea";
+import FormSelect from "../../../Components/FormSelect";
 
 export default function NewProductForm()
 {
@@ -17,7 +20,9 @@ export default function NewProductForm()
 
     const isEditing = params.productId !== 'create'; 
 
-  const [formData, setFormData] = useState<any>({
+    const [categories,setCategories] = useState<CategoryDTO[]>([]);
+
+    const [formData, setFormData] = useState<any>({
                                               name:{
                                                 value: "",
                                                 id:"name",
@@ -49,6 +54,17 @@ export default function NewProductForm()
                                                 placeholder:"Imagem",
                                                 message:"Favor carregar uma imagem válida"
                                               },
+                                              categories:{
+                                                value : [],
+                                                id:"categories",
+                                                name:"categories",
+                                                type:"text",
+                                                placeholder:"Categorias",
+                                                validation: function(value: CategoryDTO[]){
+                                                  return value.length > 0;
+                                                },
+                                                message:"Pelo menos uma categoria deve ser selecionada"
+                                              },
                                               description:{
                                                 value: "",
                                                 id:"description",
@@ -63,10 +79,14 @@ export default function NewProductForm()
                                               }
                                             });
 
-
-
-
                                             
+    useEffect ( () =>{
+        categoryService.findAllRequest()
+            .then(response => {
+                setCategories(response.data);
+            }).catch(error => { console.log(error)})
+    } , []);                                        
+                   
     useEffect( () => {
         if(isEditing)
         {
@@ -119,6 +139,7 @@ export default function NewProductForm()
     }
 
 
+
     return(
         <>
             <section className="devcom-new-product-form-section ">
@@ -142,6 +163,23 @@ export default function NewProductForm()
                                 onTurnDirty={turnInputDirty}
                             />
                             <div className="devcom-form-error" >{formData.price.message}</div>
+                        </div>
+                        <div className="devcom-form-control">
+                            <FormSelect 
+                                {...formData.categories}
+                                isMulti  
+                                onChange = { (obj : any) =>{
+                                                    const newFormData = forms.updateAndValidate(formData,"categories",obj);  
+                                                    console.log(newFormData.categories)
+                                                    setFormData(newFormData);  
+                                                    }}
+                                options = {categories} 
+                                onTurnDirty={turnInputDirty}
+                                getOptionLabel={(obj : any) => obj.name }
+                                getOptionValue={(obj : any) => String(obj.id) }
+                                className="devcom-form-control"
+                                />
+                                <div className="devcom-form-error" >{formData.categories.message}</div>
                         </div>
                         <div>
                             <FormTextArea 
