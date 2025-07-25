@@ -4,14 +4,16 @@ import { useParams } from "react-router-dom";
 import  * as forms from "../../../utils/forms";
 import { history } from "../../../utils/history";
 import FormInput from "../../../Components/FormInput";
+import * as selectStyles from "../../../utils/select";
 import { CategoryDTO } from "../../../Models/category";
+import FormSelect from "../../../Components/FormSelect";
 import { ActionButtonDTO } from "../../../Models/button";
 import FormTextArea from "../../../Components/FormTextArea";
 import * as productService from "../../../services/product-service";
 import * as categoryService from "../../../services/category-service";
 import ActionBlueButton from "../../../Components/Buttons/ActionBlueButton";
 import ActionWhiteButton from "../../../Components/Buttons/ActionWhiteButton";
-import FormSelect from "../../../Components/FormSelect";
+
 
 export default function NewProductForm()
 {
@@ -164,8 +166,9 @@ export default function NewProductForm()
                             />
                             <div className="devcom-form-error" >{formData.price.message}</div>
                         </div>
-                        <div className="devcom-form-control">
+                        <div >
                             <FormSelect 
+                                className="devcom-form-control devcom-form-select-container"
                                 {...formData.categories}
                                 isMulti  
                                 onChange = { (obj : any) =>{
@@ -175,9 +178,9 @@ export default function NewProductForm()
                                                     }}
                                 options = {categories} 
                                 onTurnDirty={turnInputDirty}
+                                styles={selectStyles}
                                 getOptionLabel={(obj : any) => obj.name }
                                 getOptionValue={(obj : any) => String(obj.id) }
-                                className="devcom-form-control"
                                 />
                                 <div className="devcom-form-error" >{formData.categories.message}</div>
                         </div>

@@ -297,7 +297,8 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
   margin: 20px 0;
 }
 .devcom-form-control {
-  width: 100%;
+  width: 450px;
+  max-width: 450px;
   height: 40px;
   font-size: 16px;
   padding: 0 20px;
@@ -329,6 +330,11 @@ a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
 .devcom-form-control[data-invalid="true"][data-dirty="true"] ~ div { /* próximo elemento div após o que estiver com data-invalid = true  recebe o display:unset*/
     display: unset;    
 } 
+
+.devcom-form-select-container{
+  padding: unset;
+  height: unset;  /*não impoe altura dele */
+}
 
 .devcom-textarea{
   resize: none;
