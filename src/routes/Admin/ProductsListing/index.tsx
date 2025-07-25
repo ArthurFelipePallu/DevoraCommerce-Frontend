@@ -11,7 +11,6 @@ import * as productService from "../../../services/product-service";
 import NextPageButton from "../../../Components/Buttons/NextPageButton";
 import ConfirmationModal from "../../../Components/Modals/ConfirmationModal";
 
-
 type QueryParams = {
   page: number;
   name: string;
@@ -26,28 +25,28 @@ const botaoCadastro: ButtonDTO = {
 };
 
 export default function ProductListing() {
-
   /// Confirmation Modal
-  const [modalMessage,setModalMessage]= useState("");
-  const [modalConfirmText,setModalConfirmText]= useState("");
-  const [modalVisibility,setmodalVisibility]= useState(false);
-  const [modalDenyAction, setModalDenyAction] = useState<Function>(() =>{});
-  const [modalConfirmAction, setModalConfirmAction] = useState<Function>(()=>{});
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalConfirmText, setModalConfirmText] = useState("");
+  const [modalVisibility, setmodalVisibility] = useState(false);
+  const [modalDenyAction, setModalDenyAction] = useState<Function>(() => {});
+  const [modalConfirmAction, setModalConfirmAction] = useState<Function>(
+    () => {}
+  );
 
-
-  ///Simple Modal 
-  const [warningModalMessage,setwarningModalMessage]= useState("");
-  const [warningModalVisibility,setwarningModalVisibility]= useState(false);
+  ///Simple Modal
+  const [warningModalMessage, setwarningModalMessage] = useState("");
+  const [warningModalVisibility, setwarningModalVisibility] = useState(false);
 
   /// Selected Product Information
-  const [productId,setProductId]= useState(-1);
-  const [mockProductId,setMockProductId]= useState(-1);
-  
-  /// Action Gates
-  const [editNow,setEditNow]= useState(false);
-  const [deleteNow,setDeleteNow]= useState(false);
+  const [productId, setProductId] = useState(-1);
+  const [mockProductId, setMockProductId] = useState(-1);
 
-  /// Page info  
+  /// Action Gates
+  const [editNow, setEditNow] = useState(false);
+  const [deleteNow, setDeleteNow] = useState(false);
+
+  /// Page info
   const [isLastPage, setLastPage] = useState(false);
   const [productList, setProductList] = useState<ProductDTO[]>([]);
   const [queryParams, setQueryParams] = useState<QueryParams>({
@@ -57,120 +56,113 @@ export default function ProductListing() {
     sort: "name",
   });
 
-
   const dialogModal: ConfirmationModalDTO = {
     message: modalMessage,
     confirmText: modalConfirmText,
-    denyText:"Cancelar",
-    answerAction : handleConfirmationModalAnswer,
+    denyText: "Cancelar",
+    answerAction: handleConfirmationModalAnswer,
   };
-   const warningModal: SimpleModalDTO = {
+  const warningModal: SimpleModalDTO = {
     message: warningModalMessage,
-    buttonText : "Ok",
-    action : changeWarningModalVisibility,
+    buttonText: "Ok",
+    action: changeWarningModalVisibility,
   };
-
 
   //Recebe resposta do modal e chama as funções atribuídas a resposta
-  function handleConfirmationModalAnswer(answer: boolean ){
+  function handleConfirmationModalAnswer(answer: boolean) {
     changeModalVisibility(); // desliga o modal
 
-    if(answer)  modalConfirmAction();
-    else   modalDenyAction();
+    if (answer) modalConfirmAction();
+    else modalDenyAction();
   }
 
-  // Função atribuida ao confirmAction do Modal 
+  // Função atribuida ao confirmAction do Modal
   // será chamada quando o comando do product card seja 'delete'
   // e o usuário clique Cancelar no modal
-  function doNothing()
-  {
+  function doNothing() {
     console.log("Did Nothing");
   }
 
-  // Função atribuida ao confirmAction do Modal 
+  // Função atribuida ao confirmAction do Modal
   // será chamada quando o comando do product card seja 'delete'
   // e o usuário clique OK no modal
-  function EditProduct()
-  {
+  function EditProduct() {
     setEditNow(true);
   }
 
-  // Função atribuida ao confirmAction do Modal 
+  // Função atribuida ao confirmAction do Modal
   // será chamada quando o comando do product card seja 'delete'
   // e o usuário clique OK no modal
-  function DeleteProduct()
-  {
+  function DeleteProduct() {
     setDeleteNow(true);
   }
 
   // recebe comando do product card e altera as funções de confirm e deny do
   // modal de acordo com o comando
-  function setProductCardsCommandActions(command:string,id:number,name:string) 
-  {        
-    setMockProductId(id);// armazena id a ser deletado se for o que usuário deseja fazer mesmo
+  function setProductCardsCommandActions(
+    command: string,
+    id: number,
+    name: string
+  ) {
+    setMockProductId(id); // armazena id a ser deletado se for o que usuário deseja fazer mesmo
     changeModalVisibility(); // liga modal
 
-    if(command == "delete")
-    {
+    if (command == "delete") {
       setModalConfirmText("Delete");
       setModalMessage("Deletar Item : " + name + " ?");
-      setConfirmAndDenyActions(() =>  DeleteProduct , () => doNothing) // altera as funçoes de confirm e deny do modal
-    }
-    else if(command == "edit")
-    {
+      setConfirmAndDenyActions(
+        () => DeleteProduct,
+        () => doNothing
+      ); // altera as funçoes de confirm e deny do modal
+    } else if (command == "edit") {
       setModalConfirmText("Editar");
       setModalMessage("Editar Item : " + name + " ?");
-      setConfirmAndDenyActions(() =>  EditProduct , () => doNothing) // altera as funçoes de confirm e deny do modal
+      setConfirmAndDenyActions(
+        () => EditProduct,
+        () => doNothing
+      ); // altera as funçoes de confirm e deny do modal
     }
-    
   }
 
   // seta as funções de commfirmação e negação atribuídas as respostas do modal
-  function setConfirmAndDenyActions(confirm : Function , deny : Function)
-  {
-    if(confirm != null)
-      setModalConfirmAction(confirm);
-    if(deny != null)
-      setModalDenyAction(deny);
+  function setConfirmAndDenyActions(confirm: Function, deny: Function) {
+    if (confirm != null) setModalConfirmAction(confirm);
+    if (deny != null) setModalDenyAction(deny);
   }
 
   // Ativa e desativa o modal
-  function changeModalVisibility()
-  {
-    setmodalVisibility( !modalVisibility);
+  function changeModalVisibility() {
+    setmodalVisibility(!modalVisibility);
   }
-    function changeWarningModalVisibility()
-  {
-    setwarningModalVisibility( !warningModalVisibility);
+  function changeWarningModalVisibility() {
+    setwarningModalVisibility(!warningModalVisibility);
   }
 
   useEffect(() => {
     setProductId(mockProductId);
   }, [mockProductId]);
 
-
   useEffect(() => {
+    if (productId == -1 || !deleteNow) return;
 
-    if(productId == -1 || !deleteNow) return;
-    
-    productService.deleteProductByIdRequest(mockProductId)
-    .then( () => {
-      setProductList([]);
-      setQueryParams({ ...queryParams, page: 0});
-    }).catch((error) => { 
-      setwarningModalMessage(error.response.data.error);
-      changeWarningModalVisibility();
-    });
+    productService
+      .deleteProductByIdRequest(mockProductId)
+      .then(() => {
+        setProductList([]);
+        setQueryParams({ ...queryParams, page: 0 });
+      })
+      .catch((error) => {
+        setwarningModalMessage(error.response.data.error);
+        changeWarningModalVisibility();
+      });
     setDeleteNow(false);
   }, [productId, deleteNow]);
 
-
   useEffect(() => {
+    if (productId == -1 || !editNow) return;
 
-    if(productId == -1 || !editNow) return;
-    
-     // console.log("editando produto : " +  mockProductId );
-      history.push("/admin/products/"+productId);
+    // console.log("editando produto : " +  mockProductId );
+    history.push("/admin/products/" + productId);
     setEditNow(false);
   }, [productId, editNow]);
 
@@ -182,10 +174,10 @@ export default function ProductListing() {
         setLastPage(response.data.last);
         setProductList(productList.concat(nextPage));
       })
-      .catch((error) => {console.log(error)});
+      .catch((error) => {
+        console.log(error);
+      });
   }, [queryParams]);
-
-
 
   function handleSearch(searchText: string) {
     setProductList([]);
@@ -215,24 +207,22 @@ export default function ProductListing() {
               <p className="devcom-product-listing-header-name">Nome</p>
             </div>
             {productList.map((product) => (
-              <ProductCRUDCard key={product.id}
-                               listedProduct={product}
-                               configureAction={setProductCardsCommandActions} />
+              <ProductCRUDCard
+                key={product.id}
+                listedProduct={product}
+                configureAction={setProductCardsCommandActions}
+              />
             ))}
 
             {!isLastPage && (
-              <div onClick={handleNextPageClick } className="devcom-mt40">
+              <div onClick={handleNextPageClick} className="devcom-mt40">
                 <NextPageButton />
               </div>
             )}
           </div>
         </section>
-        {
-          modalVisibility && <ConfirmationModal data={dialogModal} />
-        }
-        {
-          warningModalVisibility && <SimpleModal data={warningModal} />
-        }
+        {modalVisibility && <ConfirmationModal data={dialogModal} />}
+        {warningModalVisibility && <SimpleModal data={warningModal} />}
       </main>
     </>
   );

@@ -100,6 +100,12 @@ export default function NewProductForm()
         }
     } , []);
 
+    function handleSubmit()
+    {
+
+        console.log(forms.toValues(formData));
+    }
+
     function CancelForm()
     {
         returnTo("/admin/products");
@@ -121,7 +127,7 @@ export default function NewProductForm()
     const SaveButton:ActionButtonDTO ={
         id:2,
         name:"Salvar",
-        action:SaveForm
+        action:handleSubmit
     }
 
     function imageSelected(event : any)
