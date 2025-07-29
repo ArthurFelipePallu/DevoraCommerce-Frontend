@@ -31,7 +31,6 @@ export function deleteProductByIdRequest(productId:number)
     }
 
     return requestBackEnd(config);
-
 }
 
 export function insertProductRequest(obj:ProductDTO)
@@ -45,4 +44,16 @@ export function insertProductRequest(obj:ProductDTO)
 
     return requestBackEnd(config);
 
+}
+
+
+export function updateProductRequest(obj:ProductDTO)
+{
+    const config : AxiosRequestConfig ={
+        method:"PUT",
+        url:`/products/${obj.id}` ,
+        withCredentials: true,
+        data: obj
+    }
+    return requestBackEnd(config);
 }

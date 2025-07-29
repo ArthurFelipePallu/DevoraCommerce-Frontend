@@ -102,11 +102,21 @@ export default function NewProductForm() {
 
   function handleSubmit() {
     const formValidated = forms.dirtyAndValidateAll(formData);
-    
+
     if (forms.hasAnyInvalid(formValidated)) {
       setFormData(formValidated);
       return;
     }
+
+    const requestBody = forms.toValues(formData);
+
+    const request = isEditing
+      ? productService.updateProductRequest(requestBody)
+      : productService.insertProductRequest(requestBody);
+
+    request.then(() => {
+      returnTo("/admin/products");
+    });
   }
 
   function CancelForm() {
@@ -130,7 +140,7 @@ export default function NewProductForm() {
   };
 
   function imageSelected(event: any) {
-    forms.update(formData, event.target.name, event.target.files[0]);
+    //forms.update(formData, event.target.name, event.target.files[0]);
   }
   function updateForm(event: any) {
     //forms atualizado e validado
@@ -151,7 +161,7 @@ export default function NewProductForm() {
       <section className="devcom-new-product-form-section ">
         <div className="devcom-container devcom-card devcom-container-column-center">
           <h1>DADOS DO PRODUTO</h1>
-          <form className="devcom-container-column-center devcom-new-product-form" >
+          <form className="devcom-container-column-center devcom-new-product-form">
             <div>
               <FormInput
                 {...formData.name}
@@ -211,10 +221,10 @@ export default function NewProductForm() {
                                         alt="not found" 
                                         width={"250px"}/>
                                     <button onClick={() => forms.update(formData,formData.imgUrl.name,null)}>Remove</button> */}
-                <FormInput {...formData.imgUrl} onChange={imageSelected} />
+                <FormInput {...formData.imgUrl} onChange={updateForm} />
               </>
             ) : (
-              <FormInput {...formData.imgUrl} onChange={imageSelected} />
+              <FormInput {...formData.imgUrl} onChange={updateForm} />
             )}
           </form>
           <div className="devcom-new-product-form-action-buttons">
