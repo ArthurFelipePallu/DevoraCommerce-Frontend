@@ -101,6 +101,7 @@ export default function NewProductForm() {
   }, []);
 
   function handleSubmit() {
+    
     const formValidated = forms.dirtyAndValidateAll(formData);
 
     if (forms.hasAnyInvalid(formValidated)) {
@@ -116,7 +117,10 @@ export default function NewProductForm() {
 
     request.then(() => {
       returnTo("/admin/products");
-    });
+    }).catch(error => {
+        const newInputs = forms.setBackEndErrors(formData,error.response.data.errors);
+        setFormData(newInputs);
+    } );
   }
 
   function CancelForm() {
