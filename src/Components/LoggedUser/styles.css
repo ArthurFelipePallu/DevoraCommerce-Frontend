@@ -1,8 +1,7 @@
 .logged-user{
-    width: 150px;
+    width: 200px;
     display: flex;
-    flex-direction: column;
-    align-items: end;
+    justify-content: space-around;
 }
 .logged-user-name{
     color: var(--dsc-color-font-primary);
