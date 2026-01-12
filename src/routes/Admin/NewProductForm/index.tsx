@@ -126,7 +126,6 @@ export default function NewProductForm() {
   function CancelForm() {
     returnTo("/admin/products");
   }
-  function SaveForm() {}
 
   function returnTo(path: string) {
     history.push(path);
@@ -143,9 +142,7 @@ export default function NewProductForm() {
     action: handleSubmit,
   };
 
-  function imageSelected(event: any) {
-    //forms.update(formData, event.target.name, event.target.files[0]);
-  }
+
   function updateForm(event: any) {
     //forms atualizado e validado
     const result = forms.updateAndValidate(

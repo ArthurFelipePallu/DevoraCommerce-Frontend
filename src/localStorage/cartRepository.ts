@@ -14,13 +14,13 @@ export function retrieveFromLocalSotage(): OrderDTO {
   return instantiateRetrievedObjects(obj);
 }
 
-export function retrieveFromLocalSotageWithId(productId : number): OrderItemDTO {
-    const stringifiedCart =
-      localStorage.getItem(LOCALSTORAGE_CART_KEY) || '{ "items":[] }';
-    const obj = JSON.parse(stringifiedCart) as OrderDTO;
+// export function retrieveFromLocalSotageWithId(productId : number): OrderItemDTO {
+//     const stringifiedCart =
+//       localStorage.getItem(LOCALSTORAGE_CART_KEY) || '{ "items":[] }';
+//     const obj = JSON.parse(stringifiedCart) as OrderDTO;
   
-    return instantiateRetrievedObjects(obj);
-  }
+//     return instantiateRetrievedObjects(obj);
+//   }
 
 function instantiateRetrievedObjects(obj: OrderDTO): OrderDTO {
   const cart = new OrderDTO();

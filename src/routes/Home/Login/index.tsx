@@ -1,15 +1,12 @@
 import "./styles.css";
 import { useContext, useState } from "react";
 import * as forms from "../../../utils/forms";
-import { useNavigate } from "react-router-dom";
 import { history } from "../../../utils/history";
 import FormInput from "../../../Components/FormInput";
 import { ContextToken } from "../../../utils/context-API";
 import * as authService from "../../../services/auth-service";
-import FormErrorMessage from "../../../Components/FormErrorMessage";
 
 export default function Login() {
-  const navigate = useNavigate();
 
   const [errorOcurred, setOcurredError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(

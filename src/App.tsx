@@ -19,7 +19,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AccessTokenPayloadDTO } from "./Models/Authentication/auth";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import ProductListing from "./routes/Admin/ProductsListing";
-import ProductForm from "./routes/Admin/ProductForm";
 import NewProductForm from "./routes/Admin/NewProductForm";
 
 export default function App() {

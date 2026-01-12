@@ -2,7 +2,7 @@
 
 import { history } from "./history";
 import { BASE_URL } from "./system";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import * as AuthService from "../services/auth-service";
 
 export function requestBackEnd(config: AxiosRequestConfig) {
@@ -56,7 +56,7 @@ axios.interceptors.response.use(
   }
 );
 
-function displayErrorInConsole(error:any)
+function displayErrorInConsole(error: { response: { status: unknown; data: { error: unknown; }; }; })
 {
     const errorNum = error.response.status;
     const errorMessage = error.response.data.error;
