@@ -80,8 +80,3 @@ export function hasRole(role:RoleEnum) : boolean{
             return true 
     return false;
 }
-
-
-function encodeBase64(toencode: string){
-    return window.btoa(toencode);
-}
