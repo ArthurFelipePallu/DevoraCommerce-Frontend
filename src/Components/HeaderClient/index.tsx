@@ -9,7 +9,7 @@ export default function HeaderClient() {
     <header className="devcom-header-client">
       <nav className="devcom-container">
         <Link to="/">
-          <h1>DEVORA COMMERCE</h1>
+          <h1>DEVORA COMMERCE COMPLETED</h1>
         </Link>
 
         <div className="devcom-navbar-right">
