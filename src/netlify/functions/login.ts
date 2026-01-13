@@ -1,5 +1,4 @@
 import type { Handler } from '@netlify/functions';
-import { error } from 'node:console';
 
 const BASE_URL = process.env.NF_BACKEND_URL;
 const CLIENT_ID = process.env.NF_CLIENT_ID;
@@ -7,14 +6,14 @@ const CLIENT_SECRET = process.env.NF_CLIENT_SECRET;
 
 const TOKEN_PATH = '/oauth/token';
 
-export const handler : Handler = async (event) =>{
+export const handler: Handler = async (event) => {
 
     try{
-        if(event.httpMethod != 'POST'){
+        if(event.httpMethod !== 'POST'){
             return {statusCode : 405 , body : 'Method not Allowed'}
         }
         if(!BASE_URL || !CLIENT_ID || !CLIENT_SECRET){
-            return {statusCode : 500 , body : 'Missing server encironment variables'
+            return {statusCode : 500 , body : 'Missing server encironment variables' };
         }
 
         //O body chega como string (x-www-form-urlencoded ou JSON)
@@ -29,6 +28,7 @@ export const handler : Handler = async (event) =>{
             const params = new URLSearchParams(event.body || '');
             body = Object.fromEntries(params.entries());
         }
+
         const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
         //Constrói corpo como application/x-www-form-urlencoded
@@ -67,12 +67,12 @@ export const handler : Handler = async (event) =>{
         };
 
     
-        }
+        
     }catch(err : any){
         return{
             statusCode: 500,
             headers:{'Content-Type': 'application/json'},
             body:JSON.stringify({error:'proxy_error',message:err?.message ?? 'unknoun_error'}),
-        }
+        };
     }
 };
