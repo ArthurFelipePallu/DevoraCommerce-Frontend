@@ -1,30 +1,27 @@
+import axios from "axios";
 import QueryString from "qs";
 import jwtDecode from "jwt-decode";
-import { AxiosRequestConfig } from "axios";
-import { requestBackEnd } from "../utils/requests";
-import {CLIENT_ID,CLIENT_SECRET} from "../utils/system"
 import { TokenDTO } from "../Models/Authentication/token";
-import {AccessTokenPayloadDTO, CredentialsDTO, RoleEnum} from "../Models/Authentication/auth";
 import * as TokenRepository from "../localStorage/authTokenRepository";
+import {AccessTokenPayloadDTO, CredentialsDTO, RoleEnum} from "../Models/Authentication/auth";
 
 export function loginRequest( loginData: CredentialsDTO){
 
-    const requestHeaders ={
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + encodeBase64(CLIENT_ID + ":" + CLIENT_SECRET )
-    }
+    const headers = {
+        "Content-Type" : "application/x-www-form-urlencoded",
+    };
 
-    //QueryString seta os valores de JSON para o formato x-www-form-urlencoded
-    const requestBody = QueryString.stringify( {... loginData, grant_type : "password" } );
-
-    const config :AxiosRequestConfig = {
+    const requestBody =QueryString.stringify({
+        ...loginData,
+        grant_type : "password"
+    });
+    return axios({
         method:"POST",
-        url:"/oauth/token",
+        url: "/.netlify/functions/login",
         data: requestBody,
-        headers: requestHeaders
-    }
-
-   return requestBackEnd(config)
+        headers,
+        withCredentials:false
+    });
 }
 
 export function logout() 
@@ -82,9 +79,4 @@ export function hasRole(role:RoleEnum) : boolean{
         if(tokenPayload.authorities.includes(role))
             return true 
     return false;
-}
-
-
-function encodeBase64(toencode: string){
-    return window.btoa(toencode);
 }
