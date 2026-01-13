@@ -1,5 +1,5 @@
 
 .devcom-header-client{
-    background-color: var(--dsc-color-bg-secondary);
-    color: var(--dsc-color-font-primary);
+    background-color: var(--dsc-color-font-quintiary);
+    color: var(--dsc-color-font-tertiary);
 }
